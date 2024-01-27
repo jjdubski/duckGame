@@ -1,6 +1,7 @@
 let playerX, playerY = 0;
 let vecY = 0;
 let playerOnGround = false;
+let viewX = 0;
 
 const RIGHT_KEY = 68; // D
 const LEFT_KEY = 65; // A
@@ -19,6 +20,9 @@ function setup() {
 
 function draw() {
     background(173, 216, 230);
+
+    // Update viewport
+    viewX = max(0, playerX - width / 2);
 
     if (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY)) {
         playerX -= 5;
@@ -45,7 +49,12 @@ function draw() {
 
     // Player
     playerY += vecY;
-    rect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+    rect(playerX - viewX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+
+    // Test platforms
+    rect(100 - viewX, GROUND_LEVEL - 100, 100, 20);
+    rect(300 - viewX, GROUND_LEVEL - 200, 100, 20);
+    rect(500 - viewX, GROUND_LEVEL - 100, 100, 20);
 
     // Ground
     rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
