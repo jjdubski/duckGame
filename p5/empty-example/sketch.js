@@ -28,8 +28,10 @@ function setup() {
     player = new Player();
     croc = new Croc();
     enemyList.push(croc);
-    platforms.push(new Platform());
-    platform = new Platform(200);
+    // platforms.push(new Platform());
+    // platform = new Platform(200);
+
+    levelGeneration(100);
 }
 
 function draw() {
@@ -37,7 +39,14 @@ function draw() {
 
     player.display();
     player.move();
-    platforms[0].display();
+
+    platforms.forEach(platform => {
+        // Only display platforms that are on the screen
+        if (platform.x + platform.width >= viewportX && platform.x <= viewportX + width) {
+            platform.display();
+        }
+    });
+
     croc.display();
 
     // Ground
@@ -45,12 +54,29 @@ function draw() {
     rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
 }
 
+function levelGeneration(maxSteps) {
+    let nextX = 0;
+    let nextY = GROUND_LEVEL - 100;
+    let jumpDistance = 130;
+
+    for (let i = 0; i < maxSteps; i++) {
+        let newPlatform = new Platform(nextX, nextY);
+        platforms.push(newPlatform);
+        nextX += newPlatform.width;
+
+        // Put the next step within a jumping distance from the previous step
+        let angle = random(-PI / 3, PI / 3);
+        nextX += jumpDistance * cos(angle);
+        nextY = min(max(PLAYER_HEIGHT + 100, nextY + jumpDistance * sin(angle)), GROUND_LEVEL - PLAYER_HEIGHT);
+    }
+}
+
 class Platform {
-    constructor() {
+    constructor(x, y) {
         this.width = random(50, 100);
         this.height = 20;
-        this.x = width - this.width;
-        this.y = random(0, GROUND_LEVEL - this.height);
+        this.x = x;
+        this.y = y;
     }
     display() {
         fill(151, 87, 43);
