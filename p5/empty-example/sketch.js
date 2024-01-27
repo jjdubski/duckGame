@@ -30,10 +30,10 @@ class Platform{
     this.width = random(50, 100);
     this.height = 20;
     this.x = width - this.width;
-    this.y = random(0, GROUND_LEVEL);
+    this.y = random(0, GROUND_LEVEL - this.height);
   }
   display(){
-    rect(this.x, this.y, this.width, this.width);
+    rect(this.x, this.y, this.width, this.height);
   }
 }
 
