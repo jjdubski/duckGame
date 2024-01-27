@@ -1,6 +1,4 @@
-let playerX, playerY = 0;
-let vecY = 0;
-let playerOnGround = false;
+let player;
 
 const RIGHT_KEY = 68; // D
 const LEFT_KEY = 65; // A
@@ -13,40 +11,63 @@ const PLAYER_WIDTH = 50;
 
 function setup() {
     createCanvas(400, 800);
-    playerX = width / 2;
-    playerY = (height / 2) + 30;
+    player = new Player();
 }
 
 function draw() {
     background(173, 216, 230);
+    player.display();
+    player.move();
+  
+    // Ground
+    rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
+}
 
+class Platform{
+  constructor(){
+    this.x = this.width;
+    this.y = random(0, GROUND_LEVEL);
+    this.width = random(50, 100);
+  }
+  display(){
+    fill(0, 255, 0);
+    rect(this.x, this.y, this.width, this.width);
+  }
+}
+
+class Player{
+  constructor(){
+    this.x = width / 2;
+    this.y = (height / 2) + 30;
+    this.vecY = 0;
+    this.onGround = false;
+  }
+  display(){
+     rect(this.x, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+  }
+  move(){
     if (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY)) {
-        playerX -= 5;
+        this.x -= 5;
     }
     if (keyIsDown(RIGHT_ARROW) || keyIsDown(RIGHT_KEY)) {
-        playerX += 5;
+        this.x += 5;
     }
     if (keyIsDown(UP_ARROW) || keyIsDown(UP_KEY)) {
         // Ensure the player is on the ground (no double jumping)
-        if (playerOnGround) {
-            vecY = -10;
-            playerOnGround = false;
+        if (this.onGround) {
+            this.vecY = -10;
+            this.onGround = false;
         }
     }
 
     // Gravity
-    if (vecY > 0 && playerY >= GROUND_LEVEL - PLAYER_HEIGHT) {
-        vecY = 0;
-        playerY = GROUND_LEVEL - PLAYER_HEIGHT;
-        playerOnGround = true;
-    } else if (playerY < GROUND_LEVEL - PLAYER_HEIGHT) {
-        vecY += 0.5;
+    if (this.vecY > 0 && this.y >= GROUND_LEVEL - PLAYER_HEIGHT) {
+        this.vecY = 0;
+        this.y = GROUND_LEVEL - PLAYER_HEIGHT;
+        this.onGround = true;
+    } else if (this.y < GROUND_LEVEL - PLAYER_HEIGHT) {
+        this.vecY += 0.5;
     }
-
-    // Player
-    playerY += vecY;
-    rect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
-
-    // Ground
-    rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
+    this.y += this.vecY;
+  }
 }
