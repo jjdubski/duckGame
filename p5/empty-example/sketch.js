@@ -1,4 +1,5 @@
 let player, platform;
+let croc, turtle;
 let viewportX = 0;
 let platforms = [];
 let enemyList = [];
@@ -28,8 +29,10 @@ function setup() {
     player = new Player();
     croc = new Croc();
     enemyList.push(croc);
-    // platforms.push(new Platform());
-    // platform = new Platform(200);
+    //croc = new Croc();
+    //enemyList.push(croc);
+    turtle = new Turtle();
+    enemyList.push(turtle);
 
     levelGeneration(100);
 }
@@ -46,9 +49,8 @@ function draw() {
             platform.display();
         }
     });
-
-    croc.display();
-
+    //croc.display();
+    turtle.display();
     // Ground
     fill(0, 255, 0);
     rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
@@ -176,7 +178,16 @@ class Player {
 }
 
 class Pellet{
-
+    constructor(){
+        this.x = 0;
+        this.y = 0;
+        this.width = 10;
+        this.height = 10;
+    }
+    display(){
+        fill(151, 87, 43);
+        rect(this.x, this.y, this.width, this.height);
+    }
 }
 
 class Enemy {
@@ -210,11 +221,24 @@ class Croc extends Enemy {
     }
 }
 
-class Turle extends Enemy{
-
+class Turtle extends Enemy{
+    constructor(){
+        super();
+        this.x = width;
+        this.y = GROUND_LEVEL - 80;
+        this.damage = 0.5;
+        this.hp = 1;
+        this.width = 80;
+        this.height = 80;
+    }
+    display(){
+        image(imgTurtleClosed, this.x - viewportX, this.y+10, this.width, this.height);
+        noFill();
+        rect(this.x - viewportX, this.y+10, this.width, this.height);
+    }
 }
 
-class Boss{
+class Boss extends Enemy{
 
 }
 
