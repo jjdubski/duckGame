@@ -1,4 +1,6 @@
 let playerX, playerY;
+let playerOnGround = false;
+
 const RIGHT_KEY = 68; // D
 const LEFT_KEY = 65; // A
 const UP_KEY = 87; // W
@@ -25,10 +27,10 @@ function draw() {
         playerX += 5;
     }
     if (keyIsDown(UP_ARROW) || keyIsDown(UP_KEY)) {
-
         // Ensure the player is on the ground (no double jumping)
-        if (playerY >= GROUND_LEVEL - PLAYER_HEIGHT / 2) {   
+        if (playerOnGround) {   
             vecY = -10;
+            playerOnGround = false;
         }
     }
 
@@ -36,6 +38,7 @@ function draw() {
     if (vecY > 0 && playerY >= GROUND_LEVEL - PLAYER_HEIGHT / 2) {
         vecY = 0;
         playerY = GROUND_LEVEL - PLAYER_HEIGHT / 2;
+        playerOnGround = true;
     } else if (playerY < GROUND_LEVEL - PLAYER_HEIGHT / 2) {
         vecY += 0.5;
     }
