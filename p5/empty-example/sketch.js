@@ -50,6 +50,7 @@ class Platform{
     this.y = random(0, GROUND_LEVEL - this.height);
   }
   display(){
+    fill(151,87,43);
     rect(this.x, this.y, this.width, this.height);
   }
 }
@@ -62,7 +63,8 @@ class Player{
     this.onGround = false;
     this.hp = BASE_HP;
   }
-  display(){
+  display(){ 
+    fill(255, 255, 255)
      rect(this.x, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
   }
   move(){
@@ -110,6 +112,8 @@ class Croc extends Enemy{
     this.hp = 1;
   }
   display(){
+    image(imgCrocClosed, this.x-100, this.y, 100, 50);
+    noFill();
     rect(this.x, this.y, 50, 50);
   }
   move(){
