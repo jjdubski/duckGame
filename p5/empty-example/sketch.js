@@ -17,7 +17,7 @@ function setup() {
 }
 
 function draw() {
-    background(220);
+    background(173, 216, 230);
 
     if (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY)) {
         playerX -= 5;
@@ -34,17 +34,17 @@ function draw() {
     }
 
     // Gravity
-    if (vecY > 0 && playerY >= GROUND_LEVEL - PLAYER_HEIGHT / 2) {
+    if (vecY > 0 && playerY >= GROUND_LEVEL - PLAYER_HEIGHT) {
         vecY = 0;
-        playerY = GROUND_LEVEL - PLAYER_HEIGHT / 2;
+        playerY = GROUND_LEVEL - PLAYER_HEIGHT;
         playerOnGround = true;
-    } else if (playerY < GROUND_LEVEL - PLAYER_HEIGHT / 2) {
+    } else if (playerY < GROUND_LEVEL - PLAYER_HEIGHT) {
         vecY += 0.5;
     }
 
     // Player
     playerY += vecY;
-    ellipse(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
+    rect(playerX, playerY, PLAYER_WIDTH, PLAYER_HEIGHT);
 
     // Ground
     rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
