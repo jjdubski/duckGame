@@ -149,12 +149,18 @@ class Player {
     }
 }
 
+class Pellet{
+
+}
+
 class Enemy {
     constructor() {
         this.x = 0;
         this.y = 0;
         this.damage;
         this.hp;
+        this.width;
+        this.height;
     }
 }
 
@@ -165,13 +171,31 @@ class Croc extends Enemy {
         this.y = GROUND_LEVEL - 40;
         this.damage = 1;
         this.hp = 1;
+        this.width = 100;
+        this.height = 50;
     }
     display() {
-        image(imgCrocClosed, this.x - viewportX, this.y, 100, 50);
+        image(imgCrocClosed, this.x - viewportX, this.y, this.width, this.height);
         noFill();
-        rect(this.x - viewportX, this.y + 25, 100, 25);
+        rect(this.x - viewportX, this.y + 20, this.width, this.height);
     }
     move() {
         this.x -= 5;
     }
+}
+
+class Turle extends Enemy{
+
+}
+
+class Boss{
+
+}
+
+class Hawk extends Boss{
+
+}
+
+class Bobcat extends Boss{
+
 }
