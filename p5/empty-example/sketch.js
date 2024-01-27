@@ -13,6 +13,15 @@ const GROUND_LEVEL = 600;
 const PLAYER_HEIGHT = 50;
 const PLAYER_WIDTH = 50;
 
+function preload() {
+    // Load images and sounds here
+    imgCrocClosed = loadImage('assets/croc_closed.png');
+    imgCrocOpen = loadImage('assets/croc_open.png');
+
+    imgTurtleClosed = loadImage('assets/turtle_closed.png');
+    imgTurtleOpen = loadImage('assets/turtle_open.png');
+}
+
 function setup() {
     createCanvas(400, 800);
     player = new Player();
@@ -23,10 +32,12 @@ function setup() {
 
 function draw() {
     background(173, 216, 230);
+
     player.display();
     player.move();
     platforms[0].display();
     croc.display();
+
     // Ground
     rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
 }
