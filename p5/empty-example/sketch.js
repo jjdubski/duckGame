@@ -1,5 +1,8 @@
 let player;
 let platforms = [];
+let enemyList = [];
+
+const BASE_HP = 5;
 
 const RIGHT_KEY = 68; // D
 const LEFT_KEY = 65; // A
@@ -13,6 +16,8 @@ const PLAYER_WIDTH = 50;
 function setup() {
     createCanvas(400, 800);
     player = new Player();
+    croc = new Croc();
+    enemyList.push(croc);
     platforms.push(new Platform());
 }
 
@@ -21,6 +26,7 @@ function draw() {
     player.display();
     player.move();
     platforms[0].display();
+    croc.display();
     // Ground
     rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
 }
@@ -43,6 +49,7 @@ class Player{
     this.y = (height / 2) + 30;
     this.vecY = 0;
     this.onGround = false;
+    this.hp = BASE_HP;
   }
   display(){
      rect(this.x, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
@@ -71,5 +78,30 @@ class Player{
         this.vecY += 0.5;
     }
     this.y += this.vecY;
+  }
+}
+
+class Enemy{
+  constructor(){
+    this.x = 0;
+    this.y = 0;
+    this.damage;
+    this.hp;
+  }
+}
+
+class Croc extends Enemy{
+  constructor(){
+    super();
+    this.x = width;
+    this.y = GROUND_LEVEL - 40;
+    this.damage = 1;
+    this.hp = 1;
+  }
+  display(){
+    rect(this.x, this.y, 50, 50);
+  }
+  move(){
+    this.x -= 5;
   }
 }
