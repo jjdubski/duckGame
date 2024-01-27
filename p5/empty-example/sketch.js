@@ -1,4 +1,5 @@
 let player;
+let platforms = [];
 
 const RIGHT_KEY = 68; // D
 const LEFT_KEY = 65; // A
@@ -12,25 +13,26 @@ const PLAYER_WIDTH = 50;
 function setup() {
     createCanvas(400, 800);
     player = new Player();
+    platforms.push(new Platform());
 }
 
 function draw() {
     background(173, 216, 230);
     player.display();
     player.move();
-  
+    platforms[0].display();
     // Ground
     rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
 }
 
 class Platform{
   constructor(){
-    this.x = this.width;
-    this.y = random(0, GROUND_LEVEL);
     this.width = random(50, 100);
+    this.height = 20;
+    this.x = width - this.width;
+    this.y = random(0, GROUND_LEVEL);
   }
   display(){
-    fill(0, 255, 0);
     rect(this.x, this.y, this.width, this.width);
   }
 }
