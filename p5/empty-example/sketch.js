@@ -11,10 +11,9 @@ const PLAYER_HEIGHT = 50;
 const PLAYER_WIDTH = 50;
 
 function setup() {
-    createCanvas(400, 800);
-    playerX = width / 2;
-    playerY = height / 2;
-    vecY = 0;
+  createCanvas(400, 800);
+  playerX = width / 2;
+  playerY = (height / 2) + 30;
 }
 
 function draw() {
