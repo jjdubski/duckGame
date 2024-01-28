@@ -25,7 +25,7 @@ function preload() {
 }
 
 function setup() {
-    createCanvas(400, 800);
+    createCanvas(400, 700);
     player = new Player();
     croc = new Croc();
     enemyList.push(croc);
