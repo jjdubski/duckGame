@@ -48,24 +48,28 @@ function setup() {
 }
 
 function draw() {
-    
-    frameRate(60);
-    background(imgIsland);  
+    noCursor();
+    if(player.hp <= 0){
+         noLoop();
+    }else{
+        frameRate(60);
+        background(imgIsland);  
 
-    player.display();
-    player.move();
+        player.display();
+        player.move();
 
-    platforms.forEach(platform => {
-        // Only display platforms that are on the screen
-        if (platform.x + platform.width >= viewportX && platform.x <= viewportX + width) {
-            platform.display();
-        }
-    });
-    //croc.display();
-    turtle.display();
-    // Ground
-    // fill(0, 255, 0);
-    image(imgWater, 0, GROUND_LEVEL-10, width, 200);
+        platforms.forEach(platform => {
+            // Only display platforms that are on the screen
+            if (platform.x + platform.width >= viewportX && platform.x <= viewportX + width) {
+                platform.display();
+            }
+        });
+        //croc.display();
+        turtle.display();
+        // Ground
+        // fill(0, 255, 0);
+        image(imgWater, 0, GROUND_LEVEL-10, width, 200);
+    }
 }
 
 function levelGeneration(maxSteps) {

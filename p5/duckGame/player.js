@@ -3,6 +3,7 @@ class Player {
     constructor() {
         this.x = width / 2;
         this.y = (height / 2) + 30;
+        this.hp = BASE_HP;
 
         this.velY = 0;
         this.velX = 0;
@@ -95,8 +96,8 @@ class Player {
     }
     takeDamage(damage) {
         this.invincibility = 100;
-        player.hp -= damage;
-        console.log("ow");
+        this.hp -= damage;
+        console.log(player.hp);
     }
     collisionCheck() {
         // Reset collision checks
@@ -150,16 +151,14 @@ class Player {
                     // this.velY = -10;
                     damageTaken = true;
                     return;
-                }
-                // Top check
-                if (this.y >= enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x <= enemy.x + enemy.width) {
+                }else if (this.y >= enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x <= enemy.x + enemy.width) {
                     this.takeDamage(enemy.damage);
                     damageTaken = true;
                     return;
                 }
 
                 // Check if the player is hitting the enemy from the left side. Knock the player back and deal damage.
-                if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x <= enemy.x + enemy.width && this.x >= enemy.x + enemy.width+10) {
+                else if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x <= enemy.x + enemy.width && this.x >= enemy.x + enemy.width+10) {
                     this.takeDamage(enemy.damage);
                     // this.velX = 10;
                     damageTaken = true;
@@ -167,7 +166,7 @@ class Player {
                 }
 
                 // Check if the player is hitting the enemy from the right side. Knock the player back and deal damage.
-                if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x + PLAYER_WIDTH <= enemy.x + enemy.width) {
+                else if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x + PLAYER_WIDTH <= enemy.x + enemy.width) {
                     this.takeDamage(enemy.damage);
                     // this.velX = -10;
                     damageTaken = true;
