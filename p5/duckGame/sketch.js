@@ -5,6 +5,13 @@ let platforms = [];
 let enemyList = [];
 let bossFight = false;
 
+let imgCrocClosed, imgCrocOpen;
+let imgTurtleClosed, imgTurtleOpen;
+let imgIsland, imgTrees;
+let imgDuck, imgDuckWalk;
+let imgWater;
+let turtleSound, crocSound, duckSound;
+
 const BASE_HP = 5;
 
 const RIGHT_KEY = 68; // D
@@ -31,19 +38,16 @@ function preload() {
     imgDuckWalk = loadImage('assets/duck_walk.png');
 
     imgWater = loadImage('assets/water.png');
+
+    turtleSound = loadSound('assets/sounds/turtle.mp3');
+    crocSound = loadSound('assets/sounds/croc.mp3');
+    duckSound = loadSound('assets/sounds/quack.mp3');
 }
 
 function setup() {
     createCanvas(1000, 700);
 
     player = new Player();
-    // croc = new Croc();
-    // enemyList.push(croc);
-    // //croc = new Croc();
-    // //enemyList.push(croc);
-    // turtle = new Turtle();
-    // enemyList.push(turtle);
-    
     levelGeneration(100);
 }
 
@@ -68,10 +72,8 @@ function draw() {
     enemyList.forEach(enemy => {
         enemy.display();
     });
-    //croc.display();
-    // turtle.display();
+    
     // Ground
-    // fill(0, 255, 0);
     image(imgWater, 0, GROUND_LEVEL-10, width, 200);
 }
 
@@ -107,7 +109,6 @@ function levelGeneration(maxSteps) {
             if (random(1) > 0.5) {
                 let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
                 enemyList.push(newCroc);
-
                 console.log('croc spawned');
             }
         }
