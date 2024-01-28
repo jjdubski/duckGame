@@ -127,6 +127,10 @@ function draw() {
             });
         
             enemyList.forEach(enemy => {
+                if (enemy.hp <= 0) {
+                    enemyList.splice(enemyList.indexOf(enemy), 1);
+                    return;
+                }
                 enemy.display();
                 if (enemy.move) {
                     enemy.move();
