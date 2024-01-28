@@ -115,7 +115,7 @@ function levelGeneration(maxSteps) {
         // Else if the platform is too low, have a chance to spawn a turtle
         else if (nextY > GROUND_LEVEL - 250) {
             if (random(1) < 0.5) {
-                let newTurtle = new Turtle(nextX + random(50, 100), nextY - 80);
+                let newTurtle = new Turtle(nextX + random(50, 100), nextY - 50);
                 enemyList.push(newTurtle);
 
                 console.log('turtle spawned');
