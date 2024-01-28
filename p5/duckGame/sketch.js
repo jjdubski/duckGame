@@ -101,7 +101,6 @@ function draw() {
                 player.move();
             }
             if(!bossFight && player.x > 2000){
-                arenaGeneration();
                 bossFight = true;
                 hawk.x = width + 100 + viewportX;
         
@@ -114,9 +113,16 @@ function draw() {
 
                 // Clear platforms
                 platforms = [];
+                arenaGeneration();
             }
             if (bossFight==true){
                 if(arena == 1){
+                    hawk.display();
+                    fill(200, 10, 10);
+                    rect(10, 50, width-20, 10, 10);
+                    fill(139, 0, 0);
+                    textSize(28);
+                    text("Hawk", width/2, 20, 50, 30);
                 }
             }
             platforms.forEach(platform => {
