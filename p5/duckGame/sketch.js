@@ -71,4 +71,4 @@ function levelGeneration(maxSteps) {
         nextX += jumpDistance * cos(angle);
         nextY = min(max(PLAYER_HEIGHT + 100, nextY + jumpDistance * sin(angle)), GROUND_LEVEL - PLAYER_HEIGHT);
     }
-}
+}   
