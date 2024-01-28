@@ -42,6 +42,18 @@ class Player {
             pop();
         }
         rect(this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+
+        // Draw the player's health bar
+        for (let i = 0; i < Math.ceil(this.hp); i++) {
+            if (i + 1 > this.hp) {
+                let halfHeart = imgHeart.get(0, 0, imgHeart.width / 2, imgHeart.height);
+                image(halfHeart, 10 + i * 30, 10, 15, 30);
+            } else {
+                image(imgHeart, 10 + i * 30, 10, 30, 30);
+            }
+        }
+
+        // Reset the tint
         noTint();
     }
     move() {
@@ -171,6 +183,16 @@ class Player {
                     return;
                 }
             });
+
+            // Pellet check
+            for (let i = 0; i < pellets.length; i++) {
+                if (pellets[i].x + pellets[i].width > this.x && pellets[i].x < this.x + PLAYER_WIDTH) {
+                    if (pellets[i].y + pellets[i].height > this.y && pellets[i].y < this.y + PLAYER_HEIGHT) {
+                        pellets[i].heal();
+                        pellets.splice(i, 1);
+                    }
+                }
+            }
         }
     }
 }
