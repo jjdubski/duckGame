@@ -40,9 +40,14 @@ class Bullet{
         for (let i = 0; i < enemyList.length; i++) {
             if (this.x + this.width > enemyList[i].x && this.x < enemyList[i].x + enemyList[i].width && this.y + this.height > enemyList[i].y && this.y < enemyList[i].y + enemyList[i].height) {
                 enemyList[i].hp -= 1;
-                
+            
                 this.disappeared = true;
                 player.bullet = null;
+                if(enemyList[i].type == "turtle"){
+                    player.score += 50;
+                }else if(enemyList[i].type == "croc"){
+                    player.score += 100;
+                }
             }
         }
     }

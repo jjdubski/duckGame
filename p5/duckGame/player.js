@@ -18,15 +18,17 @@ class Player {
         this.invincibility = 0;
         this.orientation = 1;
         this.attackDelay = 0;
+
+        this.score = 0;
     }
     attack(){
         if(keyIsDown(32) && this.attackDelay == 0){
             //console.log("attack");
             if(this.orientation == 1){
-                bullet = new Bullet((this.x + PLAYER_WIDTH), this.y);
+                bullet = new Bullet((this.x + PLAYER_WIDTH), this.y+10);
             }
             else if(this.orientation == -1){
-                bullet = new Bullet((this.x), this.y);
+                bullet = new Bullet((this.x), this.y+10);
             }
             this.attackDelay = 130; 
         }else if(this.attackDelay>0){

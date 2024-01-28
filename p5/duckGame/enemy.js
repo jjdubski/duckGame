@@ -8,6 +8,7 @@ class Enemy {
         this.width;
         this.height;
         this.soundPlayed = false;
+        this.type;
     }
 }
 
@@ -20,6 +21,7 @@ class Croc extends Enemy {
         this.hp = 1;
         this.width = 100;
         this.height = 50;
+        this.type = "croc";
     }
     display() {
         if(this.x + this.width >= viewportX && this.x <= viewportX + width){
@@ -48,6 +50,7 @@ class Turtle extends Enemy{
         this.hp = 1;
         this.width = 50;
         this.height = 30;
+        this.type = "turtle";
     }
     display(){
         if(this.x + this.width >= viewportX && this.x <= viewportX + width){

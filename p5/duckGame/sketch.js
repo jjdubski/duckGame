@@ -100,6 +100,8 @@ function draw() {
                 }else if(arena == 2){
                     background(imgTrees);
                 }
+                fill(255,255,255);
+                text(player.score, width-100, 15, 100, 30);
                 player.display();
                 player.move();
             }
