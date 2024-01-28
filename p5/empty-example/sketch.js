@@ -114,9 +114,9 @@ class Player {
             this.vecY += 0.5;
 
             // Check if player is hitting the top of the platform
-            if (this.topCheck) {
-                this.vecY = Math.abs(this.vecY * 0.2);
-            }
+            // if (this.topCheck) {
+            //     this.vecY = Math.abs(this.vecY * 0.2);
+            // }
         }
         this.y += this.vecY;
 
@@ -152,7 +152,7 @@ class Player {
         // Platform check
         platforms.forEach(platform => {
             // Ground check
-            if (this.y + PLAYER_HEIGHT > platform.y && this.y + PLAYER_HEIGHT <= platform.y + platform.height && this.x + PLAYER_WIDTH >= platform.x && this.x <= platform.x + platform.width) {
+            if (this.vecY > 0 && this.y + PLAYER_HEIGHT > platform.y && this.y + PLAYER_HEIGHT <= platform.y + platform.height && this.x + PLAYER_WIDTH >= platform.x && this.x <= platform.x + platform.width) {
                 this.y = platform.y - PLAYER_HEIGHT;
                 this.onGround = true;
                 if (this.vecY > 0) {
