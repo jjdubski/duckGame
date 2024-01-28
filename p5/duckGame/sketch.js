@@ -20,7 +20,7 @@ function preload() {
     imgCrocClosed = loadImage('assets/croc_closed.png');
     imgCrocOpen = loadImage('assets/croc_open.png');
 
-    imgTurtleClosed = loadImage('assets/turtle_closed.png');
+    imgTurtleClosed = loadImage('assets/turtle.png');
     imgTurtleOpen = loadImage('assets/turtle_open.png');
 }
 
