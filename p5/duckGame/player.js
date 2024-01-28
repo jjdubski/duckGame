@@ -15,6 +15,15 @@ class Player {
 
         this.invincibility = 0;
         this.orientation = 1;
+        this.attackDelay = 0;
+    }
+    attack(){
+        if(keyIsDown(32) && this.attackDelay == 0){
+            console.log("attack");
+            this.attackDelay = 100; 
+        }else if(this.attackDelay>0){
+            this.attackDelay--;
+        }
     }
     display() {
         // Invincibility frames
@@ -43,6 +52,8 @@ class Player {
         }
         rect(this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
 
+        this.attack();
+
         // Draw the player's health bar
         for (let i = 0; i < Math.ceil(this.hp); i++) {
             if (i + 1 > this.hp) {
@@ -57,6 +68,9 @@ class Player {
         noTint();
     }
     move() {
+        if (this.x < viewportX) {
+            this.x = viewportX;
+        }
         // Collision check
         this.collisionCheck();
 
@@ -79,11 +93,11 @@ class Player {
             this.velX = 0;
         }
         else if (!this.leftCheck && (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY))) {
-            this.velX = -6;
+            this.velX = -5.5;
             this.orientation = -1;
         } 
         else if (!this.rightCheck && (keyIsDown(RIGHT_ARROW) || keyIsDown(RIGHT_KEY))) {
-            this.velX = 6;
+            this.velX = 5.5;
             this.orientation = 1;
         } 
         else {
@@ -107,6 +121,7 @@ class Player {
     takeDamage(damage) {
         this.invincibility = 100;
         this.hp -= damage;
+        duckSound.play();
         console.log(player.hp);
     }
     collisionCheck() {
