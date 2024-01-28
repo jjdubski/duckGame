@@ -101,6 +101,7 @@ function draw() {
                 player.move();
             }
             if(!bossFight && player.x > 2000){
+                arenaGeneration();
                 bossFight = true;
                 hawk.x = width + 100 + viewportX;
         
@@ -113,7 +114,6 @@ function draw() {
 
                 // Clear platforms
                 platforms = [];
-                arenaGeneration();
             }
             if (bossFight==true){
                 if(arena == 1){
