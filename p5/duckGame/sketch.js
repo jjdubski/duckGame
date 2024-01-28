@@ -46,17 +46,18 @@ function preload() {
     turtleSound = loadSound('assets/sounds/turtle.mp3');
     crocSound = loadSound('assets/sounds/croc.mp3');
     duckSound = loadSound('assets/sounds/quack.mp3');
+    hawkSound = loadSound('assets/sounds/hawk.mp3');
+    splashSound = loadSound('assets/sounds/splash.mp3');
 }
 
 function setup() {
-    createCanvas(1000, 700);
+    createCanvas(980, 700);
 
     player = new Player();
     levelGeneration(100);
 }
 
 function draw() {
-    noCursor();
     if(player.hp <= 0){
         noLoop();
     }else{
@@ -65,6 +66,9 @@ function draw() {
 
         player.display();
         player.move();
+    }
+    if(player.x > 1000){
+        bossFight = true;
     }
     platforms.forEach(platform => {
         // Only display platforms that are on the screen
@@ -119,13 +123,13 @@ function levelGeneration(maxSteps) {
                 console.log('pellet spawned');
             }
 
-            if (random(1) < 0.5){
+            if (random(1) > 0.2){
                 nextY = random(GROUND_LEVEL - 150, GROUND_LEVEL - 100);
                 platforms.push(new Platform(nextX, nextY));
             }
 
             // Or a crocodile
-            if (random(1) > 0.5) {
+            if (random(1) > 0.3) {
                 let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
                 enemyList.push(newCroc);
                 console.log('croc spawned');
@@ -134,9 +138,12 @@ function levelGeneration(maxSteps) {
 
         // Else if the platform is too low, have a chance to spawn a turtle
         else if (nextY > GROUND_LEVEL - 250) {
-            if (random(1) < 0.5) {
-                let newTurtle = new Turtle(nextX + random(50, 100), nextY - 30);
-                enemyList.push(newTurtle);
+            if (random(1) > 0.1) {
+                distanceBuffer = random(50,100);
+                if (distanceBuffer+nextX <= newPlatform.width) {
+                    let newTurtle = new Turtle(nextX + random(50, 100), nextY - 30);
+                    enemyList.push(newTurtle);
+                }
 
                 console.log('turtle spawned');
             }

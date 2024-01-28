@@ -13,6 +13,8 @@ class Player {
         this.leftCheck = false;
         this.rightCheck = false;
 
+        this.splashPlayed = false;
+
         this.invincibility = 0;
         this.orientation = 1;
         this.attackDelay = 0;
@@ -111,6 +113,7 @@ class Player {
             // Ensure the player is on the ground (no double jumping)
             if (this.onGround) {
                 this.velY = -12;
+                this.splashPlayed = false;
             }
         }
 
@@ -135,6 +138,10 @@ class Player {
         if (this.y + PLAYER_HEIGHT >= GROUND_LEVEL) {
             this.y = GROUND_LEVEL - PLAYER_HEIGHT;
             this.onGround = true;
+            if(this.splashPlayed == false){
+                splashSound.play();
+                this.splashPlayed = true;
+            }
         }
         // Platform check
         platforms.forEach(platform => {
