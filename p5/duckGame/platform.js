@@ -1,6 +1,6 @@
 class Platform {
     constructor(x, y) {
-        this.width = random(50, 100);
+        this.width = random(100, 200);
         this.height = 20;
         this.x = x;
         this.y = y;

@@ -8,9 +8,16 @@ class Player {
         this.topCheck = false;
         this.leftCheck = false;
         this.rightCheck = false;
+        this.orientation = 1;
     }
     display() {
-        fill(255, 255, 255);
+        noFill();
+        if(this.orientation == 1){
+            image(imgDuck, this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+        }else{ 
+            image(imgDuck, this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+            scale(-1,1);
+        }
         rect(this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
     }
     move() {
@@ -35,12 +42,12 @@ class Player {
 
         if (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY)) {
             if (!this.leftCheck) {
-                this.x -= 5;
+                this.x -= 6;
             }
         }
         if (keyIsDown(RIGHT_ARROW) || keyIsDown(RIGHT_KEY)) {
             if (!this.rightCheck) {
-                this.x += 5;
+                this.x += 6;
             }
         }
         if (keyIsDown(UP_ARROW) || keyIsDown(UP_KEY)) {
@@ -72,10 +79,10 @@ class Player {
                     this.vecY = 0;
                 }
             }
-            // Top check
-            if (this.y >= platform.y && this.y <= platform.y + platform.height && this.x + PLAYER_WIDTH >= platform.x && this.x <= platform.x + platform.width) {
-                this.topCheck = true;
-            }
+            // // Top check
+            // if (this.y >= platform.y && this.y <= platform.y + platform.height && this.x + PLAYER_WIDTH >= platform.x && this.x <= platform.x + platform.width) {
+            //     this.topCheck = true;
+            // }
 
             // Left check
             if (this.y + PLAYER_HEIGHT > platform.y && this.y <= platform.y + platform.height && this.x <= platform.x + platform.width && this.x >= platform.x) {

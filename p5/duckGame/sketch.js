@@ -22,10 +22,17 @@ function preload() {
 
     imgTurtleClosed = loadImage('assets/turtle.png');
     imgTurtleOpen = loadImage('assets/turtle_open.png');
+
+    imgIsland = loadImage('assets/island.png');
+    imgTrees = loadImage('assets/trees.png');
+
+    imgDuck = loadImage('assets/duck.png');
+    imgDuckWalk = loadImage('assets/duck_walk.png');
 }
 
 function setup() {
-    createCanvas(400, 700);
+    createCanvas(1000, 700);
+
     player = new Player();
     croc = new Croc();
     enemyList.push(croc);
@@ -33,15 +40,19 @@ function setup() {
     //enemyList.push(croc);
     turtle = new Turtle();
     enemyList.push(turtle);
-
+    
     levelGeneration(100);
 }
 
 function draw() {
-    background(173, 216, 230);
+    frameRate(60);
+    background(imgIsland);  
 
     player.display();
     player.move();
+    if(player.onGround){
+        image(imgDuckWalk, player.x - viewportX, player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+    }
 
     platforms.forEach(platform => {
         // Only display platforms that are on the screen
