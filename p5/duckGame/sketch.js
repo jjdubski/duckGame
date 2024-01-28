@@ -3,6 +3,7 @@ let croc, turtle;
 let viewportX = 0;
 let platforms = [];
 let enemyList = [];
+let bossFight = false;
 
 const BASE_HP = 5;
 
@@ -47,6 +48,7 @@ function setup() {
 }
 
 function draw() {
+    
     frameRate(60);
     background(imgIsland);  
 

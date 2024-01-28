@@ -50,8 +50,9 @@ class Player {
         this.collisionCheck();
 
         // Update viewport
-        viewportX = max(0, this.x - width / 2);
-
+        if(bossFight == false){
+            viewportX = max(0, this.x - width / 2);
+        }
         // Gravity
         if (this.velY > 0 && this.onGround) {
             this.velY = 0;
@@ -63,8 +64,10 @@ class Player {
             //     this.velY = Math.abs(this.velY * 0.2);
             // }
         }
-
-        if (!this.leftCheck && (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY))) {
+        if(!this.leftCheck && !this.rightCheck && (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY)) && (keyIsDown(RIGHT_ARROW) || keyIsDown(RIGHT_KEY))){
+            this.velX = 0;
+        }
+        else if (!this.leftCheck && (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY))) {
             this.velX = -6;
             this.orientation = -1;
         } 
@@ -156,7 +159,7 @@ class Player {
                 }
 
                 // Check if the player is hitting the enemy from the left side. Knock the player back and deal damage.
-                if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x <= enemy.x + enemy.width && this.x >= enemy.x) {
+                if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x <= enemy.x + enemy.width && this.x >= enemy.x + enemy.width+10) {
                     this.takeDamage(enemy.damage);
                     // this.velX = 10;
                     damageTaken = true;
