@@ -17,8 +17,11 @@ class Pellet {
         // }
     }
     heal(){
-        player.hp += 0.25;
-        console.log(player.hp);
-        // delete this;
+        if (player.hp < BASE_HP){
+            player.hp += 0.25;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

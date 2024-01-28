@@ -183,14 +183,14 @@ class Player {
                     return;
                 }
             });
+        }
 
-            // Pellet check
-            for (let i = 0; i < pellets.length; i++) {
-                if (pellets[i].x + pellets[i].width > this.x && pellets[i].x < this.x + PLAYER_WIDTH) {
-                    if (pellets[i].y + pellets[i].height > this.y && pellets[i].y < this.y + PLAYER_HEIGHT) {
-                        pellets[i].heal();
-                        pellets.splice(i, 1);
-                    }
+        // Pellet check
+        for (let i = 0; i < pellets.length; i++) {
+            if (pellets[i].x + pellets[i].width > this.x && pellets[i].x < this.x + PLAYER_WIDTH) {
+                if (pellets[i].y + pellets[i].height > this.y && pellets[i].y < this.y + PLAYER_HEIGHT) {
+                    pellets[i].heal();
+                    pellets.splice(i, 1);
                 }
             }
         }

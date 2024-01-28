@@ -106,15 +106,17 @@ function levelGeneration(maxSteps) {
         newPlatform = new Platform(nextX, nextY);
         platforms.push(newPlatform);
 
+        let pelletSpawned = false;
+
         // If the platform is too tall, have a chance to spawn a platform along it
         if (nextY < GROUND_LEVEL - 300) {
             // High chance to spawn pellets for an incentive
-            if (random(1) < 0.8) {
-                for (let j = 0; j < newPlatform.width / 20 - 1; j++) {
-                    let newPellet = new Pellet(nextX + j * 20 + 10, nextY - 15);
+            if (random(1) < 0.6 ) {
+                for (let j = 0; j < newPlatform.width / 25 - 1; j++) {
+                    let newPellet = new Pellet(nextX + j * 25 + 10, nextY - 15);
                     pellets.push(newPellet);
                 }
-
+                pelletSpawned = true;
                 console.log('pellet spawned');
             }
 
@@ -122,19 +124,19 @@ function levelGeneration(maxSteps) {
                 nextY = random(GROUND_LEVEL - 150, GROUND_LEVEL - 100);
                 platforms.push(new Platform(nextX, nextY));
             }
-
-            // Or a crocodile
-            if (random(1) > 0.5) {
-                let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
-                enemyList.push(newCroc);
-                console.log('croc spawned');
-            }
         }
 
-        // Else if the platform is too low, have a chance to spawn a turtle
-        else if (nextY > GROUND_LEVEL - 250) {
+        // High chance of crocodile spawning because the player needs to be punished
+        if (random(1) < 0.9) {
+            let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
+            enemyList.push(newCroc);
+            console.log('croc spawned');
+        }
+
+        // Have a chance to spawn a turtle. Skip if the platform is too short
+        if (!pelletSpawned && newPlatform.width > 150) {
             if (random(1) < 0.5) {
-                let newTurtle = new Turtle(nextX + random(50, 100), nextY - 30);
+                let newTurtle = new Turtle(nextX + newPlatform.width/2 + random(-10, 10), nextY - 30);
                 enemyList.push(newTurtle);
 
                 console.log('turtle spawned');
