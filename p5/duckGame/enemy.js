@@ -84,7 +84,8 @@ class Hawk extends Boss {
         this.x = x || width / 2;
         this.y = y || 30;
         this.damage = 1.5;
-        this.hp = 1;
+        this.baseHP = 5;
+        this.hp = this.baseHP;
         this.width = 100;
         this.height = 60;
 
@@ -214,6 +215,15 @@ class Hawk extends Boss {
                 this.soundPlayed = true;
             }
         }
+        
+        fill(200, 10, 10);
+        let hpPercent = this.hp / this.baseHP;
+        rect(10, 50, (width - 20) * hpPercent, 10);
+        fill(100, 10, 10);
+        rect(10 + (width - 20) * hpPercent, 50, (width - 20) * (1 - hpPercent), 10);
+        fill(139, 0, 0);
+        textSize(28);
+        text("Hawk", width/2, 20, 50, 30);
     }
 
     determinePlayerTarget() {

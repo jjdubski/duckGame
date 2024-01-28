@@ -9,6 +9,8 @@ let arena = 1;
 let screen = 'game';
 
 let bullet = null;
+let maxPlatforms = 20;
+let nextX = 0;
 
 let imgCrocClosed, imgCrocOpen;
 let imgTurtleClosed, imgTurtleOpen;
@@ -70,7 +72,8 @@ function setup() {
     setupMenu();
     player = new Player();
     hawk = new Hawk(width,100);
-    levelGeneration(100);
+    levelGeneration(maxPlatforms);
+    arenaGeneration();
 }
 
 function draw() {
@@ -100,7 +103,7 @@ function draw() {
                 player.display();
                 player.move();
             }
-            if(!bossFight && player.x > 2000){
+            if(!bossFight && viewportX > nextX){
                 bossFight = true;
                 hawk.x = width + 100 + viewportX;
         
@@ -109,22 +112,15 @@ function draw() {
                 enemyList.push(hawk);
         
                 // Clear pellets
-                pellets = [];
+                // pellets = [];
 
                 // Clear platforms
-                platforms = [];
-                arenaGeneration();
+                // platforms = [];
             }
-            if (bossFight==true){
-                if(arena == 1){
-                    hawk.display();
-                    fill(200, 10, 10);
-                    rect(10, 50, width-20, 10, 10);
-                    fill(139, 0, 0);
-                    textSize(28);
-                    text("Hawk", width/2, 20, 50, 30);
-                }
-            }
+            // if (bossFight==true){
+            //     if(arena == 1){
+            //     }
+            // }
             platforms.forEach(platform => {
                 // Only display platforms that are on the screen
                 if (platform.x + platform.width >= viewportX && platform.x <= viewportX + width) {
@@ -134,11 +130,16 @@ function draw() {
         
             enemyList.forEach(enemy => {
                 if (enemy.hp <= 0) {
-                    enemyList.splice(enemyList.indexOf(enemy), 1);
-                    return;
+                    if (enemy.y < height) {
+                        enemy.y += 5;
+                    } else {
+                        if (enemy instanceof Hawk) {
+                            MENU_STATE = 'win';
+                        }
+                    }
                 }
                 enemy.display();
-                if (enemy.move) {
+                if (enemy.hp > 0 && enemy.move) {
                     enemy.move();
                 }
             });
@@ -170,7 +171,6 @@ function draw() {
 }
     
 function levelGeneration(maxSteps) {
-    let nextX = 0;
     let nextY = GROUND_LEVEL - 100;
     let jumpDistance = 150;
 
@@ -214,7 +214,6 @@ function levelGeneration(maxSteps) {
         if (random(1) < 0.8) {
             let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
             enemyList.push(newCroc);
-            console.log('croc spawned');
         }
 
         // Have a chance to spawn a turtle. Skip if the platform is too short
@@ -222,33 +221,33 @@ function levelGeneration(maxSteps) {
             if (random(1) < 0.5) {
                 let newTurtle = new Turtle(nextX + newPlatform.width/2 + random(-10, 10), nextY - 30);
                 enemyList.push(newTurtle);
-
-                console.log('turtle spawned');
             }
         }
     }
 }   
 
 function arenaGeneration() {
+    nextX += 300;
+
     // One low platform in the middle in case the player falls
-    platforms.push(new Platform(width/2 - 100 + viewportX, GROUND_LEVEL - 100, 200));
+    platforms.push(new Platform(width/2 - 100 + nextX, GROUND_LEVEL - 100, 200));
 
     // Two mid platforms on both sides
-    platforms.push(new Platform(width/2 - 250 + viewportX, GROUND_LEVEL - 250));
-    platforms.push(new Platform(width/2 + 150 + viewportX, GROUND_LEVEL - 250));
+    platforms.push(new Platform(width/2 - 250 + nextX, GROUND_LEVEL - 250));
+    platforms.push(new Platform(width/2 + 150 + nextX, GROUND_LEVEL - 250));
 
     // One high platform in the middle
-    platforms.push(new Platform(width/2 - 100 + viewportX, 200, 200));
+    platforms.push(new Platform(width/2 - 100 + nextX, 200, 200));
 
     // Two low platforms on both sides for pellets
-    let pelletPlatform = new Platform(width/2 - 450 + viewportX, GROUND_LEVEL - 100);
+    let pelletPlatform = new Platform(nextX, GROUND_LEVEL - 100);
     platforms.push(pelletPlatform);
     for (let i = 0; i < pelletPlatform.width / 25 - 1; i++) {
         let newPellet = new Pellet(pelletPlatform.x + i * 25 + 10, pelletPlatform.y - 15);
         pellets.push(newPellet);
     }
 
-    pelletPlatform = new Platform(width/2 + 350 + viewportX, GROUND_LEVEL - 100);
+    pelletPlatform = new Platform(width/2 + 350 + nextX, GROUND_LEVEL - 100);
     platforms.push(pelletPlatform);
 
     for (let i = 0; i < pelletPlatform.width / 25 - 1; i++) {
