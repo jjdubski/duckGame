@@ -37,8 +37,8 @@ function setup() {
     createCanvas(1000, 700);
 
     player = new Player();
-    croc = new Croc();
-    enemyList.push(croc);
+    //croc = new Croc();
+    //enemyList.push(croc);
     //croc = new Croc();
     //enemyList.push(croc);
     turtle = new Turtle();

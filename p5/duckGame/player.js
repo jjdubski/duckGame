@@ -32,7 +32,7 @@ class Player {
         // Draw the player
         if (this.orientation == 1) {
             image(imgDuck, this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
-            console.log(this.x - viewportX);
+            //console.log(this.x - viewportX);
         } else {
             push();
 
@@ -40,7 +40,7 @@ class Player {
             translate(this.x - viewportX, this.y);
             scale(-1, 1);
             image(imgDuck, -PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
-            console.log(-this.x - PLAYER_WIDTH - viewportX);
+            //console.log(-this.x - PLAYER_WIDTH - viewportX);
             pop();
         }
         rect(this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
