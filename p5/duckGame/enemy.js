@@ -87,7 +87,7 @@ class Hawk extends Boss {
         this.x = x || width / 2;
         this.y = y || 30;
         this.damage = 1.5;
-        this.hp = 1;
+        this.hp = 5;
         this.width = 100;
         this.height = 60;
 

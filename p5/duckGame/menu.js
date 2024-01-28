@@ -44,11 +44,11 @@ function displayMainMenu() {
     fill(0);
     textSize(50);
     textAlign(CENTER);
-    text('Duck Game', width / 2, height / 2 - MENU_HEIGHT / 2 + 50);
+    text('The Lost Duckling', width / 2, height / 2 - MENU_HEIGHT / 2 + 70);
 
     // Display the buttons
-    displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + PLAY_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Play');
-    displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + HELP_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Help');
+    displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + PLAY_BUTTON_Y + 15, BUTTON_WIDTH, BUTTON_HEIGHT, 'Play');
+    displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + HELP_BUTTON_Y + 15, BUTTON_WIDTH, BUTTON_HEIGHT, 'Help');
 
     drawMenu();
 }
