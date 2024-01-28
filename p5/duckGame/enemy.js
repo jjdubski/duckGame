@@ -83,16 +83,22 @@ class Hawk extends Boss {
         super();
         this.x = x || width / 2;
         this.y = y || 30;
-        this.damage = 0.5;
+        this.damage = 1.5;
         this.hp = 1;
-        this.width = 50;
-        this.height = 30;
+        this.width = 100;
+        this.height = 60;
 
         this.state = -1;
         this.stateCounter = 0;
+
+        this.targetX = 0;
+        this.targetY = 0;
+        this.diveSpeedX = 0;
+        this.diveSpeedY = 0;
     }
-    display(){
-        
+    move() {
+        console.log(this.state);
+
         // State -1: Move from the right of the screen into the top right corner
         if (this.state == -1) {
             this.x -= 2;
@@ -100,7 +106,101 @@ class Hawk extends Boss {
                 this.state = 0;
             }
         }
+        
+        // State 0: Wait for 60 frames
+        if (this.state == 0) {
+            this.stateCounter++;
+            if (this.stateCounter > 60) {
+                this.state = 1;
+                this.stateCounter = 0;
 
+                this.determinePlayerTarget();
+            }
+        } 
+
+        // State 1: Dive down to target position
+        if (this.state == 1) {
+            if (this.x > this.targetX) {
+                this.x += this.diveSpeedX;
+            }
+            if (this.y < this.targetY) {
+                this.y += this.diveSpeedY;
+            }
+            if (this.x <= this.targetX && this.y >= this.targetY) {
+                this.state = 2;
+
+                // Determine target which is the top left corner
+                this.targetX = viewportX;
+                this.targetY = 100; 
+
+                // Determine speed
+                this.diveSpeedX = (this.targetX - this.x) / 90;
+                this.diveSpeedY = (this.targetY - this.y) / 90;
+            }
+        }
+
+        // State 2: Fly up to target position
+        if (this.state == 2) {
+            if (Math.abs(this.x - this.targetX) > 20) {
+                this.x += this.diveSpeedX;
+            }
+            if (this.y > this.targetY) {
+                this.y += this.diveSpeedY;
+            }
+            if (Math.abs(this.x - this.targetX) < 20 && this.y <= this.targetY) {
+                this.state = 3;
+                this.stateCounter = 0;
+            }
+        }
+
+        // State 3: Wait for 60 frames
+        if (this.state == 3) {
+            this.stateCounter++;
+            if (this.stateCounter > 60) {
+                this.state = 4;
+                this.stateCounter = 0;
+
+                this.determinePlayerTarget();
+            }
+        }  
+
+        // State 4: Dive down to target position
+        if (this.state == 4) {
+            if (this.x < this.targetX) {
+                this.x += this.diveSpeedX;
+            }
+            if (this.y < this.targetY) {
+                this.y += this.diveSpeedY;
+            }
+            if (this.x >= this.targetX && this.y >= this.targetY) {
+                this.state = 5;
+
+                // Determine target which is the top right corner
+                this.targetX = viewportX + width - 100;
+                this.targetY = 100; 
+
+                // Determine speed
+                this.diveSpeedX = (this.targetX - this.x) / 90;
+                this.diveSpeedY = (this.targetY - this.y) / 90;
+            }
+        }
+
+        // State 5: Fly up to target position
+        if (this.state == 5) {
+            if (Math.abs(this.x - this.targetX) > 20) {
+                this.x += this.diveSpeedX;
+            }
+            if (this.y > this.targetY) {
+                this.y += this.diveSpeedY;
+            }
+            if (Math.abs(this.x - this.targetX) < 20 && this.y <= this.targetY) {
+                this.state = 0;
+                this.stateCounter = 0;
+            }
+        }
+
+    }
+    display(){
         if(this.x + this.width >= viewportX && this.x <= viewportX + width){
             image(imgHawk, this.x - viewportX, this.y, this.width, this.height);
             noFill();
@@ -110,6 +210,20 @@ class Hawk extends Boss {
             //     this.soundPlayed = true;
             // }
         }
+    }
+
+    determinePlayerTarget() {
+        // Determine target position, which overshoots the player's position
+        let angleToPlayer = Math.atan2(player.y - this.y, player.x - this.x);
+        this.targetX = player.x + 200 * Math.cos(angleToPlayer);
+        this.targetY = player.y + 200 * Math.sin(angleToPlayer);
+
+        // Determine speed
+        this.diveSpeedX = (this.targetX - this.x) / 40;
+        this.diveSpeedY = (this.targetY - this.y) / 40;
+
+        console.log(this.targetX, this.targetY);
+        console.log(this.diveSpeedX, this.diveSpeedY);
     }
 }
 

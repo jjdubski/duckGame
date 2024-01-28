@@ -66,9 +66,6 @@ function setup() {
     player = new Player();
     hawk = new Hawk(width,100);
     levelGeneration(100);
-
-    // Spawn the boss
-    let hawk = new Hawk(width + 100, GROUND_LEVEL - 100);
 }
 
 function draw() {
@@ -84,11 +81,15 @@ function draw() {
         player.display();
         player.move();
     }
-    if(player.x > 1000){
+    if(!bossFight && player.x > width){
         bossFight = true;
-    }
-    if(bossFight==true){
+        hawk.x = width + 100 + viewportX;
+
+        
         enemyList = [];
+        enemyList.push(hawk);
+    }
+    if (bossFight==true){
         if(arena == 1){
             hawk.display();
             hawk.move();

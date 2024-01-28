@@ -183,7 +183,7 @@ class Player {
                     // this.velY = -10;
                     damageTaken = true;
                     return;
-                }else if (this.y >= enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x <= enemy.x + enemy.width) {
+                } else if (this.y >= enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x <= enemy.x + enemy.width) {
                     this.takeDamage(enemy.damage);
                     damageTaken = true;
                     return;
