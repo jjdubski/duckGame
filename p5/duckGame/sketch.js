@@ -20,12 +20,12 @@ function preload() {
     imgCrocClosed = loadImage('assets/croc_closed.png');
     imgCrocOpen = loadImage('assets/croc_open.png');
 
-    imgTurtleClosed = loadImage('assets/turtle_closed.png');
+    imgTurtleClosed = loadImage('assets/turtle.png');
     imgTurtleOpen = loadImage('assets/turtle_open.png');
 }
 
 function setup() {
-    createCanvas(400, 800);
+    createCanvas(400, 700);
     player = new Player();
     croc = new Croc();
     enemyList.push(croc);
@@ -71,4 +71,4 @@ function levelGeneration(maxSteps) {
         nextX += jumpDistance * cos(angle);
         nextY = min(max(PLAYER_HEIGHT + 100, nextY + jumpDistance * sin(angle)), GROUND_LEVEL - PLAYER_HEIGHT);
     }
-}
+}   

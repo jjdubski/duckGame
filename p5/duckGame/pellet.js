@@ -9,4 +9,8 @@ class Pellet{
         fill(151, 87, 43);
         rect(this.x, this.y, this.width, this.height);
     }
+    heal(){
+        player.hp += 0.25;
+        delete this;
+    }
 }

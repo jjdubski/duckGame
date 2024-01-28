@@ -25,8 +25,8 @@ class Croc extends Enemy {
         noFill();
         rect(this.x - viewportX, this.y + 20, this.width, this.height);
     }
-    move() {
-        this.x -= 5;
+    attack(){
+        player.hp -= this.damage;
     }
 }
 
@@ -37,13 +37,16 @@ class Turtle extends Enemy{
         this.y = GROUND_LEVEL - 80;
         this.damage = 0.5;
         this.hp = 1;
-        this.width = 80;
-        this.height = 80;
+        this.width = 50;
+        this.height = 50;
     }
     display(){
-        image(imgTurtleClosed, this.x - viewportX, this.y+10, this.width, this.height);
+        image(imgTurtleClosed, this.x - viewportX, this.y+30, this.width, this.height);
         noFill();
-        rect(this.x - viewportX, this.y+10, this.width, this.height);
+        rect(this.x - viewportX, this.y+30, this.width, this.height);
+    }
+    attack(){
+        player.hp -= this.damage;
     }
 }
 

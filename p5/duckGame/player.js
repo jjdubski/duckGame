@@ -66,7 +66,7 @@ class Player {
         if (keyIsDown(UP_ARROW) || keyIsDown(UP_KEY)) {
             // Ensure the player is on the ground (no double jumping)
             if (this.onGround) {
-                this.velY = -10;
+                this.vecY = -12;
             }
         }
 
