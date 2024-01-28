@@ -28,6 +28,8 @@ function preload() {
 
     imgDuck = loadImage('assets/duck.png');
     imgDuckWalk = loadImage('assets/duck_walk.png');
+
+    imgWater = loadImage('assets/water.png');
 }
 
 function setup() {
@@ -60,8 +62,8 @@ function draw() {
     //croc.display();
     turtle.display();
     // Ground
-    fill(0, 255, 0);
-    rect(0, GROUND_LEVEL, width, height - GROUND_LEVEL);
+    // fill(0, 255, 0);
+    image(imgWater, 0, GROUND_LEVEL-10, width, 200);
 }
 
 function levelGeneration(maxSteps) {
