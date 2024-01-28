@@ -77,6 +77,7 @@ function setup() {
 }
 
 function draw() {
+    let storedHighScore;
     switch(MENU_STATE){
         case 'main':
             displayMainMenu();
@@ -160,10 +161,18 @@ function draw() {
             }
             break;
         case 'gameOver':
+            storedHighScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+            if (player.score > storedHighScore) {
+                localStorage.setItem('highScore', player.score);
+            }
             displayGameOverMenu();
             break;
 
         case 'win':
+            storedHighScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+            if (player.score > storedHighScore) {
+                localStorage.setItem('highScore', player.score);
+            }
             displayWinMenu();
             break;
 

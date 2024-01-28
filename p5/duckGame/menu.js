@@ -108,8 +108,17 @@ function displayGameOverMenu() {
     textAlign(CENTER);
     text('Game Over', width / 2, height / 2 - MENU_HEIGHT / 2 + 50);
 
+    // Display your score
+    fill(0);
+    textSize(30);
+    textAlign(CENTER);
+    text('Score: ' + player.score, width / 2, height / 2 - MENU_HEIGHT / 2 + 100);
+
+    let storedHighScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+    text('High Score: ' + storedHighScore, width / 2, height / 2 - MENU_HEIGHT / 2 + 150);
+
     // Display the buttons
-    displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + PLAY_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Play Again');
+    displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + HELP_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Play Again');
     displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + QUIT_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Quit');
 
     drawMenu();
@@ -126,8 +135,17 @@ function displayWinMenu() {
     textAlign(CENTER);
     text('You Win!', width / 2, height / 2 - MENU_HEIGHT / 2 + 50);
 
+    // Display your score
+    fill(0);
+    textSize(30);
+    textAlign(CENTER);
+    text('Score: ' + player.score, width / 2, height / 2 - MENU_HEIGHT / 2 + 100);
+
+    let storedHighScore = localStorage.getItem('highScore') ? parseInt(localStorage.getItem('highScore')) : 0;
+    text('High Score: ' + storedHighScore, width / 2, height / 2 - MENU_HEIGHT / 2 + 150);
+
     // Display the buttons
-    displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + PLAY_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Play Again');
+    displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + HELP_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Play Again');
     displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + QUIT_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Quit');
 
     drawMenu();
