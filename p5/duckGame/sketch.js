@@ -158,7 +158,7 @@ function draw() {
                         pellets.push(newPellet);
                     }
                     pelletSpawned = true;
-                    console.log('pellet spawned');
+                    //console.log('pellet spawned');
                 }
     
                 if (random(1) > 0.2){
@@ -171,7 +171,7 @@ function draw() {
             if (random(1) < 0.8) {
                 let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
                 enemyList.push(newCroc);
-                console.log('croc spawned');
+                //console.log('croc spawned');
             }
     
             // Have a chance to spawn a turtle. Skip if the platform is too short
@@ -179,8 +179,7 @@ function draw() {
                 if (random(1) < 0.5) {
                     let newTurtle = new Turtle(nextX + newPlatform.width/2 + random(-10, 10), nextY - 30);
                     enemyList.push(newTurtle);
-    
-                    console.log('turtle spawned');
+                    //console.log('turtle spawned');
                 }
             }
         }

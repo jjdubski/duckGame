@@ -75,6 +75,7 @@ class Boss extends Enemy{
         this.hp;
         this.width;
         this.height;
+        this.hpBar;
     }
 }
 
@@ -98,7 +99,6 @@ class Hawk extends Boss {
     }
     move() {
         console.log(this.state);
-
         // State -1: Move from the right of the screen into the top right corner
         if (this.state == -1) {
             this.x -= 2;
@@ -169,7 +169,9 @@ class Hawk extends Boss {
         if (this.state == 4) {
             this.soundPlayed = false;
             if (this.x < this.targetX) {
-                this.x += this.diveSpeedX;
+                if(this.x <= viewportX + width){
+                    this.x += this.diveSpeedX;
+                }
             }
             if (this.y < this.targetY) {
                 this.y += this.diveSpeedY;
@@ -186,6 +188,7 @@ class Hawk extends Boss {
                 this.diveSpeedY = (this.targetY - this.y) / 90;
             }
         }
+
 
         // State 5: Fly up to target position
         if (this.state == 5) {
@@ -204,6 +207,11 @@ class Hawk extends Boss {
     }
     display(){
         if(this.x + this.width >= viewportX && this.x <= viewportX + width){
+            fill(200, 10, 10);
+            this.hpBar = rect(viewportX - (width/2)+10, 50, width-20, 10, 10);
+            fill(139, 0, 0);
+            textSize(28);
+            text("Hawk", viewportX, 20, 50, 30);
             image(imgHawk, this.x - viewportX, this.y, this.width, this.height);
             // noFill();
             // rect(this.x - viewportX, this.y, this.width, this.height);
