@@ -94,7 +94,7 @@ class Player {
         this.y += this.velY;
     }
     takeDamage(damage) {
-        this.invincibility = 40;
+        this.invincibility = 100;
         player.hp -= damage;
         console.log("ow");
     }
