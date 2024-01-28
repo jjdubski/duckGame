@@ -225,8 +225,20 @@ class Hawk extends Boss {
     determinePlayerTarget() {
         // Determine target position, which overshoots the player's position
         let angleToPlayer = Math.atan2(player.y - this.y, player.x - this.x);
-        this.targetX = player.x + 200 * Math.cos(angleToPlayer);
-        this.targetY = player.y + 200 * Math.sin(angleToPlayer);
+
+        // Clamp coords to the screen
+        if (player.x + 200 * Math.cos(angleToPlayer) < viewportX) {
+            let diveDist = (viewportX - player.x) / Math.cos(angleToPlayer);
+            this.targetX = player.x + diveDist * Math.cos(angleToPlayer);
+            this.targetY = player.y + diveDist * Math.sin(angleToPlayer);
+        } else if (player.x + 200 * Math.cos(angleToPlayer) > viewportX + width - this.width) {
+            let diveDist = (viewportX + width - this.width - player.x) / Math.cos(angleToPlayer);
+            this.targetX = player.x + diveDist * Math.cos(angleToPlayer);
+            this.targetY = player.y + diveDist * Math.sin(angleToPlayer);
+        } else {
+            this.targetX = player.x + 200 * Math.cos(angleToPlayer);
+            this.targetY = player.y + 200 * Math.sin(angleToPlayer);
+        }
 
         // Determine speed
         this.diveSpeedX = (this.targetX - this.x) / 40;
