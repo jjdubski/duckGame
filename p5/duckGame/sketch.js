@@ -63,6 +63,7 @@ function keyPressed() {
 
 function setup() {
     createCanvas(980, 700);
+    setupMenu();
     player = new Player();
     hawk = new Hawk(width,100);
     levelGeneration(100);
@@ -85,9 +86,16 @@ function draw() {
         bossFight = true;
         hawk.x = width + 100 + viewportX;
 
-        
+        // Clear enemies
         enemyList = [];
         enemyList.push(hawk);
+
+        // Clear pellets
+        pellets = [];
+
+        // Clear platforms
+        platforms = [];
+        arenaGeneration();
     }
     if (bossFight==true){
         if(arena == 1){
@@ -113,6 +121,10 @@ function draw() {
     // turtle.display();
     // Ground
     image(imgWater, 0, GROUND_LEVEL-10, width, 200);
+
+
+    // Draw menu
+    displayMenu();
 }
 
 function levelGeneration(maxSteps) {
@@ -174,3 +186,31 @@ function levelGeneration(maxSteps) {
         }
     }
 }   
+
+function arenaGeneration() {
+    // One low platform in the middle in case the player falls
+    platforms.push(new Platform(width/2 - 100 + viewportX, GROUND_LEVEL - 100, 200));
+
+    // Two mid platforms on both sides
+    platforms.push(new Platform(width/2 - 250 + viewportX, GROUND_LEVEL - 250));
+    platforms.push(new Platform(width/2 + 150 + viewportX, GROUND_LEVEL - 250));
+
+    // One high platform in the middle
+    platforms.push(new Platform(width/2 - 100 + viewportX, 200, 200));
+
+    // Two low platforms on both sides for pellets
+    let pelletPlatform = new Platform(width/2 - 450 + viewportX, GROUND_LEVEL - 100);
+    platforms.push(pelletPlatform);
+    for (let i = 0; i < pelletPlatform.width / 25 - 1; i++) {
+        let newPellet = new Pellet(pelletPlatform.x + i * 25 + 10, pelletPlatform.y - 15);
+        pellets.push(newPellet);
+    }
+
+    pelletPlatform = new Platform(width/2 + 350 + viewportX, GROUND_LEVEL - 100);
+    platforms.push(pelletPlatform);
+
+    for (let i = 0; i < pelletPlatform.width / 25 - 1; i++) {
+        let newPellet = new Pellet(pelletPlatform.x + i * 25 + 10, pelletPlatform.y - 15);
+        pellets.push(newPellet);
+    }
+}

@@ -97,18 +97,17 @@ class Hawk extends Boss {
         this.diveSpeedY = 0;
     }
     move() {
-        console.log(this.state);
-
+        switch (this.state) {
         // State -1: Move from the right of the screen into the top right corner
-        if (this.state == -1) {
+        case -1:
             this.x -= 2;
             if (this.x - viewportX <= width - 100) {
                 this.state = 0;
             }
-        }
+            break;
         
         // State 0: Wait for 60 frames
-        if (this.state == 0) {
+        case 0:
             this.stateCounter++;
             if (this.stateCounter > 60) {
                 this.state = 1;
@@ -116,10 +115,10 @@ class Hawk extends Boss {
 
                 this.determinePlayerTarget();
             }
-        } 
+            break;
 
         // State 1: Dive down to target position
-        if (this.state == 1) {
+        case 1:
             if (this.x > this.targetX) {
                 this.x += this.diveSpeedX;
             }
@@ -137,10 +136,10 @@ class Hawk extends Boss {
                 this.diveSpeedX = (this.targetX - this.x) / 90;
                 this.diveSpeedY = (this.targetY - this.y) / 90;
             }
-        }
+            break;
 
         // State 2: Fly up to target position
-        if (this.state == 2) {
+        case 2:
             if (Math.abs(this.x - this.targetX) > 20) {
                 this.x += this.diveSpeedX;
             }
@@ -151,10 +150,10 @@ class Hawk extends Boss {
                 this.state = 3;
                 this.stateCounter = 0;
             }
-        }
+            break;
 
         // State 3: Wait for 60 frames
-        if (this.state == 3) {
+        case 3:
             this.stateCounter++;
             if (this.stateCounter > 60) {
                 this.state = 4;
@@ -162,10 +161,10 @@ class Hawk extends Boss {
 
                 this.determinePlayerTarget();
             }
-        }  
+            break;
 
         // State 4: Dive down to target position
-        if (this.state == 4) {
+        case 4:
             if (this.x < this.targetX) {
                 this.x += this.diveSpeedX;
             }
@@ -183,10 +182,10 @@ class Hawk extends Boss {
                 this.diveSpeedX = (this.targetX - this.x) / 90;
                 this.diveSpeedY = (this.targetY - this.y) / 90;
             }
-        }
+            break;
 
         // State 5: Fly up to target position
-        if (this.state == 5) {
+        case 5:
             if (Math.abs(this.x - this.targetX) > 20) {
                 this.x += this.diveSpeedX;
             }
@@ -197,6 +196,10 @@ class Hawk extends Boss {
                 this.state = 0;
                 this.stateCounter = 0;
             }
+            break;
+
+        default:
+            break;
         }
 
     }
@@ -221,9 +224,6 @@ class Hawk extends Boss {
         // Determine speed
         this.diveSpeedX = (this.targetX - this.x) / 40;
         this.diveSpeedY = (this.targetY - this.y) / 40;
-
-        console.log(this.targetX, this.targetY);
-        console.log(this.diveSpeedX, this.diveSpeedY);
     }
 }
 
