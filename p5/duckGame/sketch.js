@@ -33,6 +33,7 @@ function preload() {
 
     imgIsland = loadImage('assets/island.png');
     imgTrees = loadImage('assets/trees.png');
+    imgPlatform = loadImage('assets/platform.png');
 
     imgDuck = loadImage('assets/duck.png');
     imgDuckWalk = loadImage('assets/duck_walk.png');
