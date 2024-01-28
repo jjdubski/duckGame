@@ -31,11 +31,11 @@ class Turtle extends Enemy{
     constructor(x, y){
         super();
         this.x = x || width;
-        this.y = y || GROUND_LEVEL - 50;
+        this.y = y || GROUND_LEVEL - 30;
         this.damage = 10;
         this.hp = 1;
         this.width = 50;
-        this.height = 50;
+        this.height = 30;
     }
     display(){
         image(imgTurtleClosed, this.x - viewportX, this.y, this.width, this.height);

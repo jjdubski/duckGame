@@ -3,6 +3,7 @@ let croc, turtle;
 let viewportX = 0;
 let platforms = [];
 let enemyList = [];
+let pellets = [];
 let bossFight = false;
 
 const BASE_HP = 5;
@@ -31,6 +32,8 @@ function preload() {
     imgDuckWalk = loadImage('assets/duck_walk.png');
 
     imgWater = loadImage('assets/water.png');
+    imgPellet = loadImage('assets/pellet.png');
+    imgHeart = loadImage('assets/heart.png');
 }
 
 function setup() {
@@ -68,6 +71,10 @@ function draw() {
     enemyList.forEach(enemy => {
         enemy.display();
     });
+
+    pellets.forEach(pellet => {
+        pellet.display();
+    });
     //croc.display();
     // turtle.display();
     // Ground
@@ -98,6 +105,16 @@ function levelGeneration(maxSteps) {
 
         // If the platform is too tall, have a chance to spawn a platform along it
         if (nextY < GROUND_LEVEL - 300) {
+            // High chance to spawn pellets for an incentive
+            if (random(1) < 0.8) {
+                for (let j = 0; j < newPlatform.width / 20 - 1; j++) {
+                    let newPellet = new Pellet(nextX + j * 20 + 10, nextY - 15);
+                    pellets.push(newPellet);
+                }
+
+                console.log('pellet spawned');
+            }
+
             if (random(1) < 0.5){
                 nextY = random(GROUND_LEVEL - 150, GROUND_LEVEL - 100);
                 platforms.push(new Platform(nextX, nextY));
@@ -115,7 +132,7 @@ function levelGeneration(maxSteps) {
         // Else if the platform is too low, have a chance to spawn a turtle
         else if (nextY > GROUND_LEVEL - 250) {
             if (random(1) < 0.5) {
-                let newTurtle = new Turtle(nextX + random(50, 100), nextY - 50);
+                let newTurtle = new Turtle(nextX + random(50, 100), nextY - 30);
                 enemyList.push(newTurtle);
 
                 console.log('turtle spawned');
