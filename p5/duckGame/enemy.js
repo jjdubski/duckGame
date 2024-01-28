@@ -85,15 +85,25 @@ class Hawk extends Boss{
         this.hp = 5;
         this.width = 200;
         this.height = 100;
-        this.x = x;
+        this.x = x - 20;
         this.y = y;
+        this.direction = 1;
     }
     display(){
         console.log(this.x, this.y);
-        console.log(player.y);
-        image(imgHawk, this.x, this.y, this.width, this.height);
+        console.log(player.x);
+        image(imgHawk, this.x - viewportX, this.y, this.width, this.height);
         noFill();
-        rect(this.x, this.y, this.width, this.height);
+        rect(this.x - viewportX, this.y, this.width, this.height);
+    }
+    move(){
+        if(this.x >= width + viewportX - this.width){
+            this.direction = -1;
+        }else if(this.x < width + viewportX - this.width && this.direction == 1){
+            this.x = this.x + 2;
+        }else if(this.x > 0 && this.direction == -1){
+            this.x = this.x - 3;
+        }
     }
 }
 

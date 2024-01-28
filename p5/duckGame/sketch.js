@@ -69,12 +69,6 @@ function setup() {
 }
 
 function draw() {
-    if(bossFight==true){
-        enemyList = [];
-        if(arena == 1){
-            hawk.display();
-        }
-    }
     if(player.hp <= 0){
         noLoop();
     }else{
@@ -89,6 +83,13 @@ function draw() {
     }
     if(player.x > 1000){
         bossFight = true;
+    }
+    if(bossFight==true){
+        enemyList = [];
+        if(arena == 1){
+            hawk.display();
+            hawk.move();
+        }
     }
     platforms.forEach(platform => {
         // Only display platforms that are on the screen
