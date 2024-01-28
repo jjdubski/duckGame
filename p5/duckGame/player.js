@@ -23,10 +23,10 @@ class Player {
         if(keyIsDown(32) && this.attackDelay == 0){
             //console.log("attack");
             if(this.orientation == 1){
-                bullet = new Bullet((this.x + PLAYER_WIDTH)- viewportX,this.y);
+                bullet = new Bullet((this.x + PLAYER_WIDTH), this.y);
             }
             else if(this.orientation == -1){
-                bullet = new Bullet((this.x)- viewportX,this.y);
+                bullet = new Bullet((this.x), this.y);
             }
             this.attackDelay = 130; 
         }else if(this.attackDelay>0){
