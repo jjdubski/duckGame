@@ -6,7 +6,8 @@ class Platform {
         this.y = y;
     }
     display() {
-        fill(151, 87, 43);
-        rect(this.x - viewportX, this.y, this.width, this.height);
+        image(imgPlatform, this.x - viewportX, this.y, this.width, this.height);
+        // noFill();
+        // rect(this.x - viewportX, this.y, this.width, this.height);
     }
 }
