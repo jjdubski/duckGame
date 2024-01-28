@@ -36,12 +36,12 @@ function setup() {
     createCanvas(1000, 700);
 
     player = new Player();
-    croc = new Croc();
-    enemyList.push(croc);
-    //croc = new Croc();
-    //enemyList.push(croc);
-    turtle = new Turtle();
-    enemyList.push(turtle);
+    // croc = new Croc();
+    // enemyList.push(croc);
+    // //croc = new Croc();
+    // //enemyList.push(croc);
+    // turtle = new Turtle();
+    // enemyList.push(turtle);
     
     levelGeneration(100);
 }
@@ -59,8 +59,12 @@ function draw() {
             platform.display();
         }
     });
+
+    enemyList.forEach(enemy => {
+        enemy.display();
+    });
     //croc.display();
-    turtle.display();
+    // turtle.display();
     // Ground
     // fill(0, 255, 0);
     image(imgWater, 0, GROUND_LEVEL-10, width, 200);
@@ -69,16 +73,48 @@ function draw() {
 function levelGeneration(maxSteps) {
     let nextX = 0;
     let nextY = GROUND_LEVEL - 100;
-    let jumpDistance = 130;
+    let jumpDistance = 150;
+
+    // Spawn first platform
+    let newPlatform = new Platform(nextX, nextY);
+    platforms.push(newPlatform);
 
     for (let i = 0; i < maxSteps; i++) {
-        let newPlatform = new Platform(nextX, nextY);
-        platforms.push(newPlatform);
         nextX += newPlatform.width;
 
         // Put the next step within a jumping distance from the previous step
         let angle = random(-PI / 3, PI / 3);
         nextX += jumpDistance * cos(angle);
-        nextY = min(max(PLAYER_HEIGHT + 100, nextY + jumpDistance * sin(angle)), GROUND_LEVEL - PLAYER_HEIGHT);
+        nextY = min(max(PLAYER_HEIGHT + 100, nextY + jumpDistance * sin(angle)), GROUND_LEVEL - 200);
+
+        // Spawn a new platform
+        newPlatform = new Platform(nextX, nextY);
+        platforms.push(newPlatform);
+
+        // If the platform is too tall, have a chance to spawn a platform along it
+        if (nextY < GROUND_LEVEL - 300) {
+            if (random(1) < 0.5){
+                nextY = random(GROUND_LEVEL - 150, GROUND_LEVEL - 100);
+                platforms.push(new Platform(nextX, nextY));
+            }
+
+            // Or a crocodile
+            if (random(1) > 0.5) {
+                let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
+                enemyList.push(newCroc);
+
+                console.log('croc spawned');
+            }
+        }
+
+        // Else if the platform is too low, have a chance to spawn a turtle
+        else if (nextY > GROUND_LEVEL - 250) {
+            if (random(1) < 0.5) {
+                let newTurtle = new Turtle(nextX + random(50, 100), nextY - 80);
+                enemyList.push(newTurtle);
+
+                console.log('turtle spawned');
+            }
+        }
     }
 }   

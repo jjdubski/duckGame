@@ -1,8 +1,8 @@
 
 class Enemy {
-    constructor() {
-        this.x = 0;
-        this.y = 0;
+    constructor(x, y) {
+        this.x = x || 0;
+        this.y = y || 0;
         this.damage;
         this.hp;
         this.width;
@@ -11,10 +11,10 @@ class Enemy {
 }
 
 class Croc extends Enemy {
-    constructor() {
+    constructor(x) {
         super();
-        this.x = width;
-        this.y = GROUND_LEVEL - 40;
+        this.x = x || width;
+        this.y = GROUND_LEVEL - 50;
         this.damage = 1;
         this.hp = 1;
         this.width = 100;
@@ -31,10 +31,10 @@ class Croc extends Enemy {
 }
 
 class Turtle extends Enemy{
-    constructor(){
+    constructor(x, y){
         super();
-        this.x = width;
-        this.y = GROUND_LEVEL - 80;
+        this.x = x || width;
+        this.y = y || GROUND_LEVEL - 50;
         this.damage = 0.5;
         this.hp = 1;
         this.width = 50;

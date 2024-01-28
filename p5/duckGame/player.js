@@ -1,7 +1,7 @@
 
 class Player {
     constructor() {
-        this.x = width / 2;
+        this.x = PLAYER_WIDTH;
         this.y = (height / 2) + 30;
 
         this.velY = 0;
@@ -31,7 +31,6 @@ class Player {
         // Draw the player
         if (this.orientation == 1) {
             image(imgDuck, this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
-            console.log(this.x - viewportX);
         } else {
             push();
 
@@ -39,7 +38,6 @@ class Player {
             translate(this.x - viewportX, this.y);
             scale(-1, 1);
             image(imgDuck, -PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
-            console.log(-this.x - PLAYER_WIDTH - viewportX);
             pop();
         }
         rect(this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
