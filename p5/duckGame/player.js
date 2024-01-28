@@ -3,6 +3,7 @@ class Player {
     constructor() {
         this.x = PLAYER_WIDTH;
         this.y = (height / 2) + 30;
+        this.hp = BASE_HP;
 
         this.velY = 0;
         this.velX = 0;
@@ -48,8 +49,9 @@ class Player {
         this.collisionCheck();
 
         // Update viewport
-        viewportX = max(0, this.x - width / 2);
-
+        if(bossFight == false){
+            viewportX = max(0, this.x - width / 2);
+        }
         // Gravity
         if (this.velY > 0 && this.onGround) {
             this.velY = 0;
@@ -61,8 +63,10 @@ class Player {
             //     this.velY = Math.abs(this.velY * 0.2);
             // }
         }
-
-        if (!this.leftCheck && (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY))) {
+        if(!this.leftCheck && !this.rightCheck && (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY)) && (keyIsDown(RIGHT_ARROW) || keyIsDown(RIGHT_KEY))){
+            this.velX = 0;
+        }
+        else if (!this.leftCheck && (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY))) {
             this.velX = -6;
             this.orientation = -1;
         } 
@@ -89,9 +93,9 @@ class Player {
         this.y += this.velY;
     }
     takeDamage(damage) {
-        this.invincibility = 40;
-        player.hp -= damage;
-        console.log("ow");
+        this.invincibility = 100;
+        this.hp -= damage;
+        console.log(player.hp);
     }
     collisionCheck() {
         // Reset collision checks
@@ -145,16 +149,14 @@ class Player {
                     // this.velY = -10;
                     damageTaken = true;
                     return;
-                }
-                // Top check
-                if (this.y >= enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x <= enemy.x + enemy.width) {
+                }else if (this.y >= enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x <= enemy.x + enemy.width) {
                     this.takeDamage(enemy.damage);
                     damageTaken = true;
                     return;
                 }
 
                 // Check if the player is hitting the enemy from the left side. Knock the player back and deal damage.
-                if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x <= enemy.x + enemy.width && this.x >= enemy.x) {
+                else if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x <= enemy.x + enemy.width && this.x >= enemy.x + enemy.width+10) {
                     this.takeDamage(enemy.damage);
                     // this.velX = 10;
                     damageTaken = true;
@@ -162,7 +164,7 @@ class Player {
                 }
 
                 // Check if the player is hitting the enemy from the right side. Knock the player back and deal damage.
-                if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x + PLAYER_WIDTH <= enemy.x + enemy.width) {
+                else if (this.y + PLAYER_HEIGHT > enemy.y && this.y <= enemy.y + enemy.height && this.x + PLAYER_WIDTH >= enemy.x && this.x + PLAYER_WIDTH <= enemy.x + enemy.width) {
                     this.takeDamage(enemy.damage);
                     // this.velX = -10;
                     damageTaken = true;

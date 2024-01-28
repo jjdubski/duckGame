@@ -3,6 +3,7 @@ let croc, turtle;
 let viewportX = 0;
 let platforms = [];
 let enemyList = [];
+let bossFight = false;
 
 const BASE_HP = 5;
 
@@ -47,12 +48,16 @@ function setup() {
 }
 
 function draw() {
-    frameRate(60);
-    background(imgIsland);  
+    noCursor();
+    if(player.hp <= 0){
+        noLoop();
+    }else{
+        frameRate(60);
+        background(imgIsland);  
 
-    player.display();
-    player.move();
-
+        player.display();
+        player.move();
+    }
     platforms.forEach(platform => {
         // Only display platforms that are on the screen
         if (platform.x + platform.width >= viewportX && platform.x <= viewportX + width) {
