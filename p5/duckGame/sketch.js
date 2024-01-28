@@ -74,16 +74,22 @@ function setup() {
 }
 
 function draw() {
-    switch(screen){
+    switch(MENU_STATE){
         case 'main':
-            //mainMenu();
+            displayMainMenu();
             break;
+
+        case 'help':
+            displayHelpMenu();
+            break;
+
         case 'pause':
-            //pauseMenu();
+            displayPauseMenu();
             break;
-        case 'game':
+
+        case 'play':
             if(player.hp <= 0){
-                noLoop();
+                MENU_STATE = 'gameOver';
             }else{
                 frameRate(60);
                 if(arena == 1){
@@ -111,8 +117,6 @@ function draw() {
             }
             if (bossFight==true){
                 if(arena == 1){
-                    hawk.display();
-                    hawk.move();
                 }
             }
             platforms.forEach(platform => {
@@ -124,6 +128,9 @@ function draw() {
         
             enemyList.forEach(enemy => {
                 enemy.display();
+                if (enemy.move) {
+                    enemy.move();
+                }
             });
         
             pellets.forEach(pellet => {
@@ -133,22 +140,23 @@ function draw() {
             // turtle.display();
             // Ground
             image(imgWater, 0, GROUND_LEVEL-10, width, 200);
+
+            // Pause button
+            if (keyIsDown(27) || keyIsDown(80)) {
+                MENU_STATE = 'pause';
+            }
             break;
         case 'gameOver':
-            //gameOverMenu();
+            displayGameOverMenu();
             break;
 
         case 'win':
-            // winMenu();
+            displayWinMenu();
             break;
 
         default:
             break;
     }
-                
-
-    // Draw menu
-    displayMenu();
 }
     
 function levelGeneration(maxSteps) {

@@ -32,7 +32,7 @@ class Player {
         }else if(this.attackDelay>0){
             this.attackDelay--;
         }
-        if(bullet != null){
+        if (bullet != null){
             bullet.display();
             bullet.move();
         }

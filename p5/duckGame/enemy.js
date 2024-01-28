@@ -131,7 +131,7 @@ class Hawk extends Boss {
 
                 // Determine target which is the top left corner
                 this.targetX = viewportX;
-                this.targetY = 100; 
+                this.targetY = 120; 
 
                 // Determine speed
                 this.diveSpeedX = (this.targetX - this.x) / 90;
@@ -178,7 +178,7 @@ class Hawk extends Boss {
 
                 // Determine target which is the top right corner
                 this.targetX = viewportX + width - 100;
-                this.targetY = 100; 
+                this.targetY = 120; 
 
                 // Determine speed
                 this.diveSpeedX = (this.targetX - this.x) / 90;
