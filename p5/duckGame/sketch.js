@@ -94,7 +94,7 @@ function draw() {
                 player.display();
                 player.move();
             }
-            if(!bossFight && player.x > width){
+            if(!bossFight && player.x > 2000){
                 bossFight = true;
                 hawk.x = width + 100 + viewportX;
         
@@ -132,8 +132,7 @@ function draw() {
             //croc.display();
             // turtle.display();
             // Ground
-            image(imgWater, 0, GROUND_LEVEL-10, width, 200);
-            break;
+            image(imgWater, 0, GROUND_LEVEL-10, width, 200); 
         case 'gameOver':
             //gameOverMenu();
             break;
