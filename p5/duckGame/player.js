@@ -21,10 +21,20 @@ class Player {
     }
     attack(){
         if(keyIsDown(32) && this.attackDelay == 0){
-            console.log("attack");
-            this.attackDelay = 100; 
+            //console.log("attack");
+            if(this.orientation == 1){
+                bullet = new Bullet((this.x + PLAYER_WIDTH)- viewportX,this.y);
+            }
+            else if(this.orientation == -1){
+                bullet = new Bullet((this.x)- viewportX,this.y);
+            }
+            this.attackDelay = 130; 
         }else if(this.attackDelay>0){
             this.attackDelay--;
+        }
+        if(bullet != null){
+            bullet.display();
+            bullet.move();
         }
     }
     display() {
@@ -38,7 +48,6 @@ class Player {
         } else {
             tint(255, 255, 255, 100);
         }
-        noFill();
 
         // Draw the player
         if (this.orientation == 1) {
@@ -52,7 +61,8 @@ class Player {
             image(imgDuck, -PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
             pop();
         }
-        rect(this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+        //noFill();
+        //rect(this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
 
         this.attack();
 

@@ -23,13 +23,13 @@ class Croc extends Enemy {
     }
     display() {
         if(this.x + this.width >= viewportX && this.x <= viewportX + width){
-            if(frameCount % 30 == 0 || frameCount%30 == 1 || frameCount%30 == 2 || frameCount%30 == 3 || frameCount%30 == 4 || frameCount%30 == 5){
+            if(millis()%1000 < 500){
                 image(imgCrocClosed, this.x - viewportX, this.y, this.width, this.height);
             }else{  
                 image(imgCrocOpen, this.x - viewportX, this.y, this.width, this.height);
             }
-            noFill();
-            rect(this.x - viewportX, this.y + 20, this.width, this.height);
+            // noFill();
+            // rect(this.x - viewportX, this.y + 20, this.width, this.height);
             if(this.soundPlayed == false){
                 crocSound.play();
                 this.soundPlayed = true;
@@ -51,13 +51,13 @@ class Turtle extends Enemy{
     }
     display(){
         if(this.x + this.width >= viewportX && this.x <= viewportX + width){
-            if(frameCount % 30 == 0 || frameCount%30 == 1 || frameCount%30 == 2 || frameCount%30 == 3 || frameCount%30 == 4 || frameCount%30 == 5){
+            if(millis()%500 < 250){
                 image(imgTurtleClosed, this.x - viewportX, this.y, this.width, this.height);
             }else{  
                 image(imgTurtleOpen, this.x - viewportX, this.y, this.width, this.height);
             }
-            noFill();
-            rect(this.x - viewportX, this.y, this.width, this.height);
+            // noFill();
+            // rect(this.x - viewportX, this.y, this.width, this.height);
             if(this.soundPlayed == false){
                 turtleSound.play();
                 this.soundPlayed = true;
@@ -119,6 +119,7 @@ class Hawk extends Boss {
 
         // State 1: Dive down to target position
         case 1:
+            this.soundPlayed = false;
             if (this.x > this.targetX) {
                 this.x += this.diveSpeedX;
             }
@@ -165,6 +166,7 @@ class Hawk extends Boss {
 
         // State 4: Dive down to target position
         case 4:
+            this.soundPlayed = false;
             if (this.x < this.targetX) {
                 this.x += this.diveSpeedX;
             }
@@ -206,12 +208,12 @@ class Hawk extends Boss {
     display(){
         if(this.x + this.width >= viewportX && this.x <= viewportX + width){
             image(imgHawk, this.x - viewportX, this.y, this.width, this.height);
-            noFill();
-            rect(this.x - viewportX, this.y, this.width, this.height);
-            // if(this.soundPlayed == false){
-            //     hawkSound.play();
-            //     this.soundPlayed = true;
-            // }
+            // noFill();
+            // rect(this.x - viewportX, this.y, this.width, this.height);
+            if(this.soundPlayed == false){
+                hawkSound.play();
+                this.soundPlayed = true;
+            }
         }
     }
 

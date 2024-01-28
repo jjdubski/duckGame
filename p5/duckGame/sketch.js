@@ -6,13 +6,16 @@ let enemyList = [];
 let pellets = [];
 let bossFight = false;
 let arena = 1;
+let screen = 'game';
+
+let bullet = null;
 
 let imgCrocClosed, imgCrocOpen;
 let imgTurtleClosed, imgTurtleOpen;
 let imgIsland, imgTrees;
 let imgDuck, imgDuckWalk;
 let imgHawk, imgBobcat;
-let imgWater, imgPellet, imgHeart;
+let imgWater, imgPellet, imgHeart, imgBullet;
 let turtleSound, crocSound, duckSound;
 
 const BASE_HP = 5;
@@ -47,6 +50,7 @@ function preload() {
     imgWater = loadImage('assets/water.png');
     imgPellet = loadImage('assets/pellet.png');
     imgHeart = loadImage('assets/heart.png');
+    imgBullet = loadImage('assets/waterDrop.png');
 
     turtleSound = loadSound('assets/sounds/turtle.mp3');
     crocSound = loadSound('assets/sounds/croc.mp3');
@@ -70,122 +74,135 @@ function setup() {
 }
 
 function draw() {
-    if(player.hp <= 0){
-        noLoop();
-    }else{
-        frameRate(60);
-        if(arena == 1){
-            background(imgIsland);  
-        }else if(arena == 2){
-            background(imgTrees);
-        }
-        player.display();
-        player.move();
+    switch(screen){
+        case 'main':
+            //mainMenu();
+            break;
+        case 'pause':
+            //pauseMenu();
+            break;
+        case 'game':
+            if(player.hp <= 0){
+                noLoop();
+            }else{
+                frameRate(60);
+                if(arena == 1){
+                    background(imgIsland);  
+                }else if(arena == 2){
+                    background(imgTrees);
+                }
+                player.display();
+                player.move();
+            }
+            if(!bossFight && player.x > width){
+                bossFight = true;
+                hawk.x = width + 100 + viewportX;
+        
+                // Clear enemies
+                enemyList = [];
+                enemyList.push(hawk);
+        
+                // Clear pellets
+                pellets = [];
+
+                // Clear platforms
+                platforms = [];
+                arenaGeneration();
+            }
+            if (bossFight==true){
+                if(arena == 1){
+                    hawk.display();
+                    hawk.move();
+                }
+            }
+            platforms.forEach(platform => {
+                // Only display platforms that are on the screen
+                if (platform.x + platform.width >= viewportX && platform.x <= viewportX + width) {
+                    platform.display();
+                }
+            });
+        
+            enemyList.forEach(enemy => {
+                enemy.display();
+            });
+        
+            pellets.forEach(pellet => {
+                pellet.display();
+            });
+            //croc.display();
+            // turtle.display();
+            // Ground
+            image(imgWater, 0, GROUND_LEVEL-10, width, 200);
+            break;
+            
+        case default:
+            break;
+
     }
-    if(!bossFight && player.x > width){
-        bossFight = true;
-        hawk.x = width + 100 + viewportX;
-
-        // Clear enemies
-        enemyList = [];
-        enemyList.push(hawk);
-
-        // Clear pellets
-        pellets = [];
-
-        // Clear platforms
-        platforms = [];
-        arenaGeneration();
-    }
-    if (bossFight==true){
-        if(arena == 1){
-            hawk.display();
-            hawk.move();
-        }
-    }
-    platforms.forEach(platform => {
-        // Only display platforms that are on the screen
-        if (platform.x + platform.width >= viewportX && platform.x <= viewportX + width) {
-            platform.display();
-        }
-    });
-
-    enemyList.forEach(enemy => {
-        enemy.display();
-    });
-
-    pellets.forEach(pellet => {
-        pellet.display();
-    });
-    //croc.display();
-    // turtle.display();
-    // Ground
-    image(imgWater, 0, GROUND_LEVEL-10, width, 200);
-
+                
 
     // Draw menu
     displayMenu();
 }
-
-function levelGeneration(maxSteps) {
-    let nextX = 0;
-    let nextY = GROUND_LEVEL - 100;
-    let jumpDistance = 150;
-
-    // Spawn first platform
-    let newPlatform = new Platform(nextX, nextY);
-    platforms.push(newPlatform);
-
-    for (let i = 0; i < maxSteps; i++) {
-        nextX += newPlatform.width;
-
-        // Put the next step within a jumping distance from the previous step
-        let angle = random(-PI / 3, PI / 3);
-        nextX += jumpDistance * cos(angle);
-        nextY = min(max(PLAYER_HEIGHT + 100, nextY + jumpDistance * sin(angle)), GROUND_LEVEL - 200);
-
-        // Spawn a new platform
-        newPlatform = new Platform(nextX, nextY);
-        platforms.push(newPlatform);
-
-        let pelletSpawned = false;
-
-        // If the platform is too tall, have a chance to spawn a platform along it
-        if (nextY < GROUND_LEVEL - 300) {
-            // High chance to spawn pellets for an incentive
-            if (random(1) < 0.6 ) {
-                for (let j = 0; j < newPlatform.width / 25 - 1; j++) {
-                    let newPellet = new Pellet(nextX + j * 25 + 10, nextY - 15);
-                    pellets.push(newPellet);
-                }
-                pelletSpawned = true;
-                console.log('pellet spawned');
-            }
-
-            if (random(1) > 0.2){
-                nextY = random(GROUND_LEVEL - 150, GROUND_LEVEL - 100);
-                platforms.push(new Platform(nextX, nextY));
-            }
-        }
-
-        // High chance of crocodile spawning because the player needs to be punished
-        if (random(1) < 0.8) {
-            let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
-            enemyList.push(newCroc);
-            console.log('croc spawned');
-        }
-
-        // Have a chance to spawn a turtle. Skip if the platform is too short
-        if (!pelletSpawned && newPlatform.width > 150) {
-            if (random(1) < 0.5) {
-                let newTurtle = new Turtle(nextX + newPlatform.width/2 + random(-10, 10), nextY - 30);
-                enemyList.push(newTurtle);
-
-                console.log('turtle spawned');
-            }
-        }
     }
-}   
+    function levelGeneration(maxSteps) {
+        let nextX = 0;
+        let nextY = GROUND_LEVEL - 100;
+        let jumpDistance = 150;
+    
+        // Spawn first platform
+        let newPlatform = new Platform(nextX, nextY);
+        platforms.push(newPlatform);
+    
+        for (let i = 0; i < maxSteps; i++) {
+            nextX += newPlatform.width;
+    
+            // Put the next step within a jumping distance from the previous step
+            let angle = random(-PI / 3, PI / 3);
+            nextX += jumpDistance * cos(angle);
+            nextY = min(max(PLAYER_HEIGHT + 100, nextY + jumpDistance * sin(angle)), GROUND_LEVEL - 200);
+    
+            // Spawn a new platform
+            newPlatform = new Platform(nextX, nextY);
+            platforms.push(newPlatform);
+    
+            let pelletSpawned = false;
+    
+            // If the platform is too tall, have a chance to spawn a platform along it
+            if (nextY < GROUND_LEVEL - 300) {
+                // High chance to spawn pellets for an incentive
+                if (random(1) < 0.6 ) {
+                    for (let j = 0; j < newPlatform.width / 25 - 1; j++) {
+                        let newPellet = new Pellet(nextX + j * 25 + 10, nextY - 15);
+                        pellets.push(newPellet);
+                    }
+                    pelletSpawned = true;
+                    console.log('pellet spawned');
+                }
+    
+                if (random(1) > 0.2){
+                    nextY = random(GROUND_LEVEL - 150, GROUND_LEVEL - 100);
+                    platforms.push(new Platform(nextX, nextY));
+                }
+            }
+    
+            // High chance of crocodile spawning because the player needs to be punished
+            if (random(1) < 0.8) {
+                let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
+                enemyList.push(newCroc);
+                console.log('croc spawned');
+            }
+    
+            // Have a chance to spawn a turtle. Skip if the platform is too short
+            if (!pelletSpawned && newPlatform.width > 150) {
+                if (random(1) < 0.5) {
+                    let newTurtle = new Turtle(nextX + newPlatform.width/2 + random(-10, 10), nextY - 30);
+                    enemyList.push(newTurtle);
+    
+                    console.log('turtle spawned');
+                }
+            }
+        }}   
 
 function arenaGeneration() {
     // One low platform in the middle in case the player falls
@@ -213,4 +230,5 @@ function arenaGeneration() {
         let newPellet = new Pellet(pelletPlatform.x + i * 25 + 10, pelletPlatform.y - 15);
         pellets.push(newPellet);
     }
-}
+}     
+
