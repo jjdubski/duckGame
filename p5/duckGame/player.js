@@ -82,6 +82,8 @@ class Player {
     move() {
         if (this.x < viewportX) {
             this.x = viewportX;
+        }else if(this.x + PLAYER_WIDTH >= viewportX + width){
+            this.x = viewportX + width - PLAYER_WIDTH;
         }
         // Collision check
         this.collisionCheck();

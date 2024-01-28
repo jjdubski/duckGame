@@ -100,7 +100,7 @@ function draw() {
                 player.display();
                 player.move();
             }
-            if(!bossFight && player.x > width){
+            if(!bossFight && player.x > 2000){
                 bossFight = true;
                 hawk.x = width + 100 + viewportX;
         

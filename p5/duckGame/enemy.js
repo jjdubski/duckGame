@@ -75,6 +75,7 @@ class Boss extends Enemy{
         this.hp;
         this.width;
         this.height;
+        this.hpBar;
     }
 }
 
@@ -168,7 +169,9 @@ class Hawk extends Boss {
         case 4:
             this.soundPlayed = false;
             if (this.x < this.targetX) {
-                this.x += this.diveSpeedX;
+                if(this.x <= viewportX + width){
+                    this.x += this.diveSpeedX;
+                }
             }
             if (this.y < this.targetY) {
                 this.y += this.diveSpeedY;
@@ -199,14 +202,16 @@ class Hawk extends Boss {
                 this.stateCounter = 0;
             }
             break;
-
-        default:
-            break;
         }
 
     }
     display(){
         if(this.x + this.width >= viewportX && this.x <= viewportX + width){
+            fill(200, 10, 10);
+            this.hpBar = rect(viewportX - (width/2)+10, 50, width-20, 10, 10);
+            fill(139, 0, 0);
+            textSize(28);
+            text("Hawk", viewportX, 20, 50, 30);
             image(imgHawk, this.x - viewportX, this.y, this.width, this.height);
             // noFill();
             // rect(this.x - viewportX, this.y, this.width, this.height);
