@@ -5,12 +5,14 @@ let platforms = [];
 let enemyList = [];
 let pellets = [];
 let bossFight = false;
+let arena = 1;
 
 let imgCrocClosed, imgCrocOpen;
 let imgTurtleClosed, imgTurtleOpen;
 let imgIsland, imgTrees;
 let imgDuck, imgDuckWalk;
-let imgWater;
+let imgHawk, imgBobcat;
+let imgWater, imgPellet, imgHeart;
 let turtleSound, crocSound, duckSound;
 
 const BASE_HP = 5;
@@ -39,6 +41,9 @@ function preload() {
     imgDuck = loadImage('assets/duck.png');
     imgDuckWalk = loadImage('assets/duck_walk.png');
 
+    imgHawk = loadImage('assets/hawk.png');
+    //imgBobcat = loadImage('assets/bobcat.png');
+
     imgWater = loadImage('assets/water.png');
     imgPellet = loadImage('assets/pellet.png');
     imgHeart = loadImage('assets/heart.png');
@@ -50,20 +55,35 @@ function preload() {
     splashSound = loadSound('assets/sounds/splash.mp3');
 }
 
+function keyPressed() {
+    if (keyCode == 27 || keyCode == 13 || keyCode == ESCAPE) {
+        player.attack();
+    }
+}
+
 function setup() {
     createCanvas(980, 700);
-
     player = new Player();
+    hawk = new Hawk(width,100);
     levelGeneration(100);
 }
 
 function draw() {
+    if(bossFight==true){
+        enemyList = [];
+        if(arena == 1){
+            hawk.display();
+        }
+    }
     if(player.hp <= 0){
         noLoop();
     }else{
         frameRate(60);
-        background(imgIsland);  
-
+        if(arena == 1){
+            background(imgIsland);  
+        }else if(arena == 2){
+            background(imgTrees);
+        }
         player.display();
         player.move();
     }
@@ -132,7 +152,7 @@ function levelGeneration(maxSteps) {
         }
 
         // High chance of crocodile spawning because the player needs to be punished
-        if (random(1) < 0.9) {
+        if (random(1) < 0.8) {
             let newCroc = new Croc(nextX + random(100, 250), GROUND_LEVEL - 50);
             enemyList.push(newCroc);
             console.log('croc spawned');

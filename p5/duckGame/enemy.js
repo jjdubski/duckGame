@@ -67,11 +67,34 @@ class Turtle extends Enemy{
 }
 
 class Boss extends Enemy{
-
+    constructor(x,y){
+        super();
+        this.x = x;
+        this.y = y;
+        this.damage;
+        this.hp;
+        this.width;
+        this.height;
+    }
 }
 
 class Hawk extends Boss{
-
+    constructor(x,y){
+        super();
+        this.damage = 1;
+        this.hp = 5;
+        this.width = 200;
+        this.height = 100;
+        this.x = x;
+        this.y = y;
+    }
+    display(){
+        console.log(this.x, this.y);
+        console.log(player.y);
+        image(imgHawk, this.x, this.y, this.width, this.height);
+        noFill();
+        rect(this.x, this.y, this.width, this.height);
+    }
 }
 
 class Bobcat extends Boss{
