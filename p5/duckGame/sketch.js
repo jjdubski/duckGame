@@ -66,6 +66,9 @@ function setup() {
     player = new Player();
     hawk = new Hawk(width,100);
     levelGeneration(100);
+
+    // Spawn the boss
+    let hawk = new Hawk(width + 100, GROUND_LEVEL - 100);
 }
 
 function draw() {

@@ -78,31 +78,37 @@ class Boss extends Enemy{
     }
 }
 
-class Hawk extends Boss{
-    constructor(x,y){
+class Hawk extends Boss {
+    constructor(x, y) {
         super();
-        this.damage = 1;
-        this.hp = 5;
-        this.width = 200;
-        this.height = 100;
-        this.x = x - 20;
-        this.y = y;
-        this.direction = 1;
+        this.x = x || width / 2;
+        this.y = y || 30;
+        this.damage = 0.5;
+        this.hp = 1;
+        this.width = 50;
+        this.height = 30;
+
+        this.state = -1;
+        this.stateCounter = 0;
     }
     display(){
-        console.log(this.x, this.y);
-        console.log(player.x);
-        image(imgHawk, this.x - viewportX, this.y, this.width, this.height);
-        noFill();
-        rect(this.x - viewportX, this.y, this.width, this.height);
-    }
-    move(){
-        if(this.x >= width + viewportX - this.width){
-            this.direction = -1;
-        }else if(this.x < width + viewportX - this.width && this.direction == 1){
-            this.x = this.x + 2;
-        }else if(this.x > 0 && this.direction == -1){
-            this.x = this.x - 3;
+        
+        // State -1: Move from the right of the screen into the top right corner
+        if (this.state == -1) {
+            this.x -= 2;
+            if (this.x - viewportX <= width - 100) {
+                this.state = 0;
+            }
+        }
+
+        if(this.x + this.width >= viewportX && this.x <= viewportX + width){
+            image(imgHawk, this.x - viewportX, this.y, this.width, this.height);
+            noFill();
+            rect(this.x - viewportX, this.y, this.width, this.height);
+            // if(this.soundPlayed == false){
+            //     hawkSound.play();
+            //     this.soundPlayed = true;
+            // }
         }
     }
 }
