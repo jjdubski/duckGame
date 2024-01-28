@@ -13,21 +13,37 @@ class Player {
         this.rightCheck = false;
 
         this.invincibility = 0;
+        this.orientation = 1;
     }
     display() {
         // Invincibility frames
         if (this.invincibility > 0) {
             this.invincibility--;
-            
         } 
-
         // Flash the player if they are invincible
         if (this.invincibility % 20 < 10) {
-            fill(255, 255, 255);
+            noTint();
         } else {
-            fill(255, 0, 0);
+            tint(255, 255, 255, 100);
+        }
+        noFill();
+
+        // Draw the player
+        if (this.orientation == 1) {
+            image(imgDuck, this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+            console.log(this.x - viewportX);
+        } else {
+            push();
+
+            // Messy but that's just how this library works
+            translate(this.x - viewportX, this.y);
+            scale(-1, 1);
+            image(imgDuck, -PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT);
+            console.log(-this.x - PLAYER_WIDTH - viewportX);
+            pop();
         }
         rect(this.x - viewportX, this.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+        noTint();
     }
     move() {
         // Collision check
@@ -49,12 +65,12 @@ class Player {
         }
 
         if (!this.leftCheck && (keyIsDown(LEFT_ARROW) || keyIsDown(LEFT_KEY))) {
-            this.velX = -5;
+            this.velX = -6;
+            this.orientation = -1;
         } 
         else if (!this.rightCheck && (keyIsDown(RIGHT_ARROW) || keyIsDown(RIGHT_KEY))) {
-            if (!this.rightCheck) {
-                this.velX = 5;
-            }
+            this.velX = 6;
+            this.orientation = 1;
         } 
         else {
             if (this.velX > 0) {
@@ -101,10 +117,10 @@ class Player {
                     this.velY = 0;
                 }
             }
-            // Top check
-            if (this.y >= platform.y && this.y <= platform.y + platform.height && this.x + PLAYER_WIDTH >= platform.x && this.x <= platform.x + platform.width) {
-                this.topCheck = true;
-            }
+            // // Top check
+            // if (this.y >= platform.y && this.y <= platform.y + platform.height && this.x + PLAYER_WIDTH >= platform.x && this.x <= platform.x + platform.width) {
+            //     this.topCheck = true;
+            // }
 
             // Left check
             if (this.y + PLAYER_HEIGHT > platform.y && this.y <= platform.y + platform.height && this.x <= platform.x + platform.width && this.x >= platform.x) {
