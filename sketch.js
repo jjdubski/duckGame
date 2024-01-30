@@ -15,7 +15,7 @@ let nextX = 0;
 let imgCrocClosed, imgCrocOpen;
 let imgTurtleClosed, imgTurtleOpen;
 let imgIsland, imgTrees;
-let imgDuck, imgDuckWalk;
+let imgDuck, imgDuckWalk, imgMamaDuck;
 let imgHawk, imgBobcat;
 let imgWater, imgPellet, imgHeart, imgBullet;
 let turtleSound, crocSound, duckSound;
@@ -44,6 +44,7 @@ function preload() {
     imgPlatform = loadImage('assets/platform.png');
 
     imgDuck = loadImage('assets/duck.png');
+    imgMamaDuck = loadImage('assets/mama.png');
     imgDuckWalk = loadImage('assets/duck_walk.png');
 
     imgHawk = loadImage('assets/hawk.png');
@@ -137,6 +138,9 @@ function draw() {
                         enemy.y += 5;
                     } else {
                         if (enemy instanceof Hawk) {
+                            if(MENU_STATE != 'win'){
+                                player.score += 1000;
+                            }
                             MENU_STATE = 'win';
                         }
                     }

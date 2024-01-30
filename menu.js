@@ -149,6 +149,7 @@ function displayWinMenu() {
     displayButton(width / 2 - BUTTON_WIDTH / 2, height / 2 - MENU_HEIGHT / 2 + QUIT_BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, 'Quit');
 
     drawMenu();
+    image(imgMamaDuck, width/2+200,height/2+200, 100, 100);
 }
 
 function displayButton(x, y, w, h, txt) {
