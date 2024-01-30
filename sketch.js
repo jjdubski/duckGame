@@ -56,9 +56,9 @@ function preload() {
     imgBullet = loadImage('./assets/waterDrop.png');
 
     turtleSound = loadSound('./assets/sounds/turtle.mp3');
-    crocSound = loadSound('./assets/sounds/croc.mp3');
+    crocSound = loadSound('./assets/sounds/croc_updated.mp3');
     duckSound = loadSound('./assets/sounds/quack.mp3');
-    hawkSound = loadSound('./assets/sounds/hawk.mp3');
+    hawkSound = loadSound('./assets/sounds/hawk_updated.mp3');
     splashSound = loadSound('./assets/sounds/splash.mp3');
 }
 
