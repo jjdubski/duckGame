@@ -43,7 +43,7 @@ function preload() {
     imgTrees = loadImage('./assets/trees.png');
     imgPlatform = loadImage('./assets/platform.png');
 
-    imgDuck = loadImage('/assets/duck.png');
+    imgDuck = loadImage('.././assets/duck.png');
     imgMamaDuck = loadImage('./assets/mama.png');
     imgDuckWalk = loadImage('./assets/duck_walk.png');
 
