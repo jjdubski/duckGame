@@ -33,33 +33,33 @@ const PLAYER_WIDTH = 50;
 
 function preload() {
     // Load images and sounds here
-    imgCrocClosed = loadImage('assets/croc_closed.png');
-    imgCrocOpen = loadImage('assets/croc_open.png');
+    imgCrocClosed = loadImage('./assets/croc_closed.png');
+    imgCrocOpen = loadImage('./assets/croc_open.png');
 
-    imgTurtleClosed = loadImage('assets/turtle.png');
-    imgTurtleOpen = loadImage('assets/turtle_open.png');
+    imgTurtleClosed = loadImage('./assets/turtle.png');
+    imgTurtleOpen = loadImage('./assets/turtle_open.png');
 
-    imgIsland = loadImage('assets/island.png');
-    imgTrees = loadImage('assets/trees.png');
-    imgPlatform = loadImage('assets/platform.png');
+    imgIsland = loadImage('./assets/island.png');
+    imgTrees = loadImage('./assets/trees.png');
+    imgPlatform = loadImage('./assets/platform.png');
 
-    imgDuck = loadImage('assets/duck.png');
-    imgMamaDuck = loadImage('assets/mama.png');
-    imgDuckWalk = loadImage('assets/duck_walk.png');
+    imgDuck = loadImage('./assets/duck.png');
+    imgMamaDuck = loadImage('./assets/mama.png');
+    imgDuckWalk = loadImage('./assets/duck_walk.png');
 
-    imgHawk = loadImage('assets/hawk.png');
+    imgHawk = loadImage('./assets/hawk.png');
     //imgBobcat = loadImage('assets/bobcat.png');
 
-    imgWater = loadImage('assets/water.png');
-    imgPellet = loadImage('assets/pellet.png');
-    imgHeart = loadImage('assets/heart.png');
-    imgBullet = loadImage('assets/waterDrop.png');
+    imgWater = loadImage('./assets/water.png');
+    imgPellet = loadImage('./assets/pellet.png');
+    imgHeart = loadImage('./assets/heart.png');
+    imgBullet = loadImage('./assets/waterDrop.png');
 
-    turtleSound = loadSound('assets/sounds/turtle.mp3');
-    crocSound = loadSound('assets/sounds/croc.mp3');
-    duckSound = loadSound('assets/sounds/quack.mp3');
-    hawkSound = loadSound('assets/sounds/hawk.mp3');
-    splashSound = loadSound('assets/sounds/splash.mp3');
+    turtleSound = loadSound('./assets/sounds/turtle.mp3');
+    crocSound = loadSound('./assets/sounds/croc.mp3');
+    duckSound = loadSound('./assets/sounds/quack.mp3');
+    hawkSound = loadSound('./assets/sounds/hawk.mp3');
+    splashSound = loadSound('./assets/sounds/splash.mp3');
 }
 
 function keyPressed() {
