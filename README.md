@@ -8,3 +8,8 @@
 
 ### How we did it
   #### We used javascript and the p5 library and created several original textures and artwork to provide a unique look.
+
+# Controls
+
+### Arrow keys for movement
+### Space bar to shoot water
